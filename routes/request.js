@@ -10,20 +10,25 @@ const app = express() ;
 
 app.get('/getRequestForm' ,isAuth.isAuth , requestController.getRequestForm) ;
 
+app.get('/getModifyForm' , isAuth.isAuth , requestController.getModifyForm)
+
+app.post('/cancelRequest' , isAuth.isAuth , requestController.cancelRequest) ;
+
 app.post('/generateRequest' ,isAuth.isAuth , requestController.generateRequest) ;
 
-app.post('/modifyRequest' , isLoggedIn , requestController.modifyRequest) ;
+app.post('/modifyRequest' , isAuth.isAuth , requestController.modifyRequest) ;
 
-app.get('/getGeneratedRequests' ,isLoggedIn , requestController.getGeneratedRequests) ;
+app.get('/getGeneratedRequests' ,isAuth.isAuth , requestController.getGeneratedRequests) ;
 
-app.get('/getToBeApprovedRequests' , isLoggedIn , requestController.getToBeApprovedRequests) ;
+app.get('/getToBeApprovedRequests' , isAuth.isAuth , requestController.getToBeApprovedRequests) ;
 
-app.get('/getSingleRequest' , isLoggedIn , requestController.getSingleRequest) ;
+app.get('/getSingleRequest' , isAuth.isAuth , requestController.getSingleRequest) ;
 
-app.get('/getApprovedRequests' , isLoggedIn , requestController.getApprovedRequests) ;
+app.get('/getApprovedRequests' , isAuth.isAuth , requestController.getApprovedRequests) ;
 
-app.post('/addComment' , isLoggedIn , requestController.addComment) ;
+app.post('/addComment' , isAuth.isAuth , requestController.addComment) ;
 
-app.post('/approveRequest' , isLoggedIn , requestController.approveRequest)
+app.post('/approveRequest' , isAuth.isAuth , requestController.approveRequest)
 
+app.get('/getComments' , isAuth.isAuth , requestController.getComments) ;
 module.exports = app ;

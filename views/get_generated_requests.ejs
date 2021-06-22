@@ -1,0 +1,41 @@
+
+<%- include('./includes/head.ejs') %>
+<link rel="stylesheet" type="text/css" href="css/register.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://kit.fontawesome.com/0cfa224e02.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<body style="background-color: wheat;">
+
+    <div class="d-flex justify-content-center">
+        
+        <ul class="d-flex row justify-content-center p-xl-3 p-lg-3 p-md-2 p-1 persons-ul">
+            <%requests.forEach(request => {%>
+                <a href="http://localhost:5000/getSingleRequest?requestId=<%=request._id%>" style="list-style-type: none; font-family: 'Viga', sans-serif;text-decoration: none;" class = "alert alert-success shadow p-3 mb-5 bg-white rounded col col-xl-10 col-lg-10 col-md-10 col-sm-10 col-10 mx-3">
+        
+                    <div class="d-flex justify-content-between">
+                        <h4>Status</h4>
+                        <h4><%=request.state%></h4>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <h4>To Be Approved By</h4>
+                        <h4><%=request.toBeApprovedBy%></h4>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <h4>Type</h4>
+                        <h4><%=request.requestBody.type%></h4>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <h4>Position</h4>
+                        <h4><%=request.requestBody.position%></h4>
+                    </div>
+                </a>
+                <br>
+                <br>
+            <%})%>        
+        </ul>
+    </div>
+<%- include('./includes/end.ejs') %>

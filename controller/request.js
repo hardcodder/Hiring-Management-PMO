@@ -16,7 +16,8 @@ module.exports.generateRequest = async(req , res , next) =>
         requestBody.position = req.body.position ;
         requestBody.team = req.body.team ;
         requestBody.businessCase = req.body.BusinessCase ; 
-        if(type = "New")
+        requestBody.reportingManager = req.body.reportingManager ;
+        if(type == "New")
         {
             requestBody.priority = req.body.prior ;
             requestBody.numPersons = req.body.numPersons ;
@@ -69,8 +70,11 @@ module.exports.getGeneratedRequests = async (req , res , next) =>
     try
     {
         let requests = await Request.find({generatedBy : req.user.email}) ;
-        res.json({
-            requests : requests
+        res.render("get_generated_requests.ejs" , 
+        {
+            path:'generated_requests' ,
+            title:'Generated Requests' ,
+            requests: requests ,
         })
     }
     catch(err)
@@ -84,9 +88,12 @@ module.exports.getGeneratedRequests = async (req , res , next) =>
 module.exports.getToBeApprovedRequests = async (req , res , next) => {
     try
     {
-        let requests = await Request.find({toBeApprovedBy : req.user.email}) ;
-        res.json({
-            requests : requests
+        let requests = await Request.find({toBeApprovedBy : req.user.email , state:"OPEN"}) ;
+        res.render("to_be_approved_requests.ejs" , 
+        {
+            path:'to_be_approved_requests' ,
+            title:'To Be Approved Requests' ,
+            requests: requests ,
         })
     }
     catch(err)
@@ -100,14 +107,19 @@ module.exports.getToBeApprovedRequests = async (req , res , next) => {
 module.exports.getSingleRequest = async (req , res , next) => {
     try
     {
-        let requestId = req.body.requestId ;
+        let requestId = req.query.requestId ;
         let request = await Request.findById(requestId) ;
         if(request)
         {
             if(request.generatedBy == req.user.email || request.toBeApprovedBy == req.user.email)
             {
-                res.json({
-                    request : request
+                res.render("get_single_request.ejs" , 
+                {
+                    path:'single_request' ,
+                    title:'Single Request' ,
+                    request: request ,
+                    generator: request.generatedBy == req.user.email ,
+                    approver : request.toBeApprovedBy == req.user.email 
                 })
             }
             else
@@ -141,15 +153,18 @@ module.exports.addComment = async (req , res , next) => {
         {
             if(request.generatedBy == req.user.email || request.toBeApprovedBy == req.user.email)
             {
-                const comment = {
-                    text : req.body.text ,
-                    writtenBy : req.user.email 
+                if(req.body.comment)
+                {
+                    const comment = {
+                        text : req.body.comment ,
+                        writtenBy : req.user.email 
+                    }
+                    const comments = [comment , ...request.comments] ;
+                    request.comments = comments ;
                 }
-                const comments = [comment , ...request.comments] ;
-                request.comments = comments ;
-                request = await request.save() ;
+                await request.save() ;
                 res.json({
-                    request : request
+                    message:"Commented"
                 })
             }
             else
@@ -183,7 +198,7 @@ module.exports.cancelRequest = async (req , res , next) => {
         {
             if(request.generatedBy == req.user.email || request.toBeApprovedBy == req.user.email)
             {
-                request.state = "CANCEL" ;
+                request.state = "CANCELLED" ;
                 await request.save() ;
                 res.json({
                     message : "Cancelled"
@@ -257,23 +272,45 @@ module.exports.modifyRequest = async (req , res , next) => {
         {
             if(request.generatedBy == req.user.email)
             {
-                const comment = {
-                    text : req.body.text ,
-                    writtenBy : req.user.email
+               //need to vertify whether this email exists or not
+                request.toBeApprovedBy = req.body.toBeApprovedBy ;
+
+                let type = req.body.type ;
+                
+                let requestBody ={};
+                requestBody.type = type ;
+                requestBody.position = req.body.position ;
+                requestBody.team = req.body.team ;
+                requestBody.businessCase = req.body.BusinessCase ; 
+                requestBody.reportingManager = req.body.reportingManager ;
+                if(type == "New")
+                {
+                    requestBody.priority = req.body.prior ;
+                    requestBody.numPersons = req.body.numPersons ;
                 }
-        
-                const comments = [comment , ...request.comments] ;
-        
-                request.comments = comments ;
+                else
+                {
+                    requestBody.personReplacing = req.body.personReplacing ;
+                    requestBody.budgetCode = req.body.budgetCode ;
+                }
 
-                request.requestBody = req.body.requestBody ;
+                request.requestBody = requestBody ;
 
-                request = await request.save() ;
+                if(req.body.comment)
+                {
+                    const comment = {
+                        text : req.body.comment ,
+                        writtenBy : req.user.email 
+                    }
+                    const comments = [comment , ...request.comments] ;
+                    request.comments = comments ;
+                }
 
+                await request.save() ;
+                
                 res.json({
-                    request : request
+                    message:"Modified"
                 })
-
             }
             else
             {
@@ -291,6 +328,7 @@ module.exports.modifyRequest = async (req , res , next) => {
     }
     catch(err)
     {
+        console.log(err) ;
         res.json({
             error : err
         })
@@ -301,8 +339,11 @@ module.exports.getApprovedRequests = async (req , res , next) => {
     try
     {
         let requests = await Request.find({state : "APPROVED"}) ;
-        res.json({
-            requests : requests
+        res.render("get_approved_requests.ejs" , 
+        {
+            path:'approved_requests' ,
+            title:'Approved Requests' ,
+            requests: requests ,
         })
     }
     catch(err)
@@ -324,6 +365,86 @@ module.exports.getRequestForm = async(req , res , next) => {
     }
     catch(err)
     {
+        res.json({
+            message:"user already exists" ,
+            type : "error"
+        }) ; 
+    }
+}
+
+module.exports.getModifyForm = async(req , res , next) => {
+    try
+    {
+        let requestId = req.query.requestId ;
+        let request = await Request.findById(requestId) ;
+        if(request)
+        {
+            if(request.generatedBy == req.user.email || request.toBeApprovedBy == req.user.email)
+            {
+                res.render("modify_form.ejs" , 
+                {
+                    path:'modify_form' ,
+                    title:'Modify Form' ,
+                    request:request
+                })
+            }
+            else
+            {
+                res.json({
+                    error : "You dont have the permission to view this request"
+                }) 
+            }
+        }
+        else
+        {
+            res.json({
+                error : "No such request exist"
+            })
+        }
+    }
+    catch(err)
+    {
+        console.log(err) ;
+        res.json({
+            message:"user already exists" ,
+            type : "error"
+        }) ; 
+    }
+}
+
+module.exports.getComments = async(req , res , next) => {
+    try
+    {
+        let requestId = req.query.requestId ;
+        let request = await Request.findById(requestId) ;
+        if(request)
+        {
+            if(request.generatedBy == req.user.email || request.toBeApprovedBy == req.user.email)
+            {
+                res.render("getComments.ejs" , 
+                {
+                    path:'get_comments' ,
+                    title:'Comments' ,
+                    request:request
+                })
+            }
+            else
+            {
+                res.json({
+                    error : "You dont have the permission to view this request"
+                }) 
+            }
+        }
+        else
+        {
+            res.json({
+                error : "No such request exist"
+            })
+        }
+    }
+    catch(err)
+    {
+        console.log(err) ;
         res.json({
             message:"user already exists" ,
             type : "error"

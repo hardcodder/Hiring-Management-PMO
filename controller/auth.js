@@ -32,11 +32,8 @@ module.exports.postSignup = async(req , res , next) =>
                 password : hashedPass
             }) ;
             user = await user.save() ;
-            res.json({
-                message:"signed up" ,
-                type : "Success" 
-            })
-        }
+            res.redirect('/login') ;
+            }
     }
     catch(err)
     {
@@ -54,6 +51,24 @@ module.exports.getLogin = async (req , res , next) => {
         {
             path:'login' ,
             title:'Login' ,
+        })
+    }
+    catch(err)
+    {
+        res.json({
+            message:"user already exists" ,
+            type : "error"
+        }) ; 
+    }
+}
+
+module.exports.getSignup = async (req , res , next) => {
+    try
+    {
+        res.render("signup.ejs" , 
+        {
+            path:'signup' ,
+            title:'Signup' ,
         })
     }
     catch(err)

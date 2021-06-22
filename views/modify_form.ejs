@@ -1,0 +1,60 @@
+<%- include('./includes/head.ejs') %>
+    <link rel="stylesheet" type="text/css" href="css/register.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/0cfa224e02.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <body>
+
+<div class="con d-flex container-fluid justify-content-around row pt-5">
+    <form class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-12 shadow mt-5" action="/modifyRequest" method="post">
+        <div style="text-align: center;">
+            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" name="toBeApprovedBy" placeholder="Enter Your Approver Email" value="<%=request.toBeApprovedBy%>">
+        </div>
+        <div style="text-align: center;">
+            <label for="exampleFormControlSelect1">Select Type</label>
+            <select style="width: 80%; border-radius:20px;opacity: 0.8;margin: 0 auto;" class="form-control type" id="exampleFormControlSelect1" name="type" value="<%=request.requestBody.type%>">
+              <option>New</option>
+              <option>Replacement</option>
+            </select>
+        </div>
+        <div style="text-align: center;">
+            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" name="reportingManager" placeholder="Enter Reporting Manager Email" value="<%=request.requestBody.reportingManager%>">
+        </div>
+        <div style="text-align: center;">
+            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2 _new" type="text" name="prior"  placeholder="Enter the priority" value="<%=request.requestBody.priority%>">
+        </div>
+        <div style="text-align: center;">
+            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" name="team" placeholder="Enter the team name" value="<%=request.requestBody.team%>">
+        </div>
+        <div style="text-align: center;">
+            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" name="position" placeholder="Enter the position" value="<%=request.requestBody.position%>">
+        </div>
+        <div style="text-align: center;">
+            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2 _replace" type="text" name="personReplacing" placeholder="Name of person to be replaced" value="<%=request.requestBody.personReplacing%>">
+        </div>
+        <div style="text-align: center;">
+            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2 _replace" type="text" name="budgetCode"  placeholder="Budget Code" value="<%=request.requestBody.budgetCode%>">
+        </div>
+        <div style="text-align: center;">
+            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2 _new" type="number" name="numPersons"  placeholder="Number of persons to be hired" value="<%=request.requestBody.numPersons%>">
+        </div>
+        <div style="text-align: center;">
+            <textarea style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" name="BusinessCase" placeholder="Enter the business case" value="<%=request.requestBody.businessCase%>"><%=request.requestBody.businessCase%></textarea>
+        </div>
+        <div style="text-align: center;">
+            <textarea style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" name="comment" placeholder="Enter the message for approver" value=""></textarea>
+        </div>
+
+        <div style="text-align: center;">
+            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2 _new" type="hidden" name="requestId" value="<%=request._id%>">
+        </div>
+
+        <div style="text-align: center;">
+            <input style="width: 50%;border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="submit" placeholder = "Sign in">
+        </div>
+        
+    </form>
+</div>
+    <script src="js/request_form.js" ></script>
+    <%- include('./includes/end.ejs') %>
