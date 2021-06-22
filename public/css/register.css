@@ -1,0 +1,79 @@
+html
+{
+    height: 100%;
+    width: auto;
+}
+body
+{
+    background-color: antiquewhite;
+    height: 100%;
+    width: auto;
+    padding-bottom: 25%;
+}
+.con
+{
+    margin-top: 5%;
+}
+.form-heading 
+{
+    color: #fff020;
+    text-shadow: 1px 0.5px hsl(0, 0%, 0%);
+}
+.form-heading h2
+{
+    font-size: 2.4rem;
+    font-weight: 600;
+}
+.form-heading p
+{
+    font-size: 1.2rem;
+    color: #ff9666;
+    text-shadow: 0.6px 0.6px hsl(0, 0%, 0%);
+}
+form div input
+{
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+form div textarea
+{
+    font-size: 1.1rem;
+}
+input:focus
+{
+    font-size: 1.2rem;
+    outline: none;
+}
+textarea
+{
+    font-weight: 600;
+}
+textarea:focus
+{
+    font-size: 1.2rem;
+}
+@media(max-width:600px)
+{
+    body
+    {
+        background-image: url('/icon/back.jpg');
+    }
+    .icon
+    {
+        visibility: hidden;
+    }
+    .form-heading
+    {
+        color: rgb(245, 255, 231);
+    }
+    .form-heading h2
+    {
+        font-weight: 400;
+    }
+    .form-heading p
+    {
+        color: rgb(245, 255, 231);
+        text-shadow: 1px 0.5px hsl(0, 0%, 0%);
+        font-size: 1rem;
+    }
+}
