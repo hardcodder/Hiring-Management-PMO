@@ -1,4 +1,5 @@
 const Request = require('../models/Request') ;
+const {sendMail} = require('../utils');
 
 module.exports.generateRequest = async(req , res , next) => 
 {
@@ -50,6 +51,16 @@ module.exports.generateRequest = async(req , res , next) =>
         console.log(request) ;
 
         await request.save() ;
+
+        let url = `http://localhost:5000/getSingleRequest?requestId=${request._id}`
+        const mail_info = 
+            {
+                to: toBeApprovedBy,
+                subject: "New Request Arrived",
+                text: "",
+                html: `<p>You have a new request. Kindly <a href = ${url}>visit</a></p>`,
+            }
+            sendMail(mail_info);
 
         res.json({
             message : "request generated" ,
@@ -162,6 +173,23 @@ module.exports.addComment = async (req , res , next) => {
                     const comments = [comment , ...request.comments] ;
                     request.comments = comments ;
                 }
+
+                let send_to = request.generatedBy;
+                if(request.generatedBy == req.user.email) 
+                {
+                    send_to = request.toBeApprovedBy;
+                }
+
+                let url = `http://localhost:5000/getComments?requestId=${request._id}`
+                const mail_info = 
+                    {
+                        to: send_to,
+                        subject: `New comments added on ${request.requestBody.team} request`,
+                        text: "",
+                        html: `<p>Kindly <a href = ${url}>visit</a> for more information.</p>`,
+                    }
+                    sendMail(mail_info);
+
                 await request.save() ;
                 res.json({
                     message:"Commented"

@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs') ;
 const jwt = require("jsonwebtoken") ;
 const User = require('../models/User') ;
-
+const {sendMail} = require('../utils');
 
 const JWT_SECRET = "INNOVACCER_SHAKTI"
 
@@ -32,6 +32,16 @@ module.exports.postSignup = async(req , res , next) =>
                 password : hashedPass
             }) ;
             user = await user.save() ;
+
+            const mail_info = 
+            {
+                to: user.email,
+                subject: "Registration Successful",
+                text: "Welcome" + user.name + " !",
+                html: "<p>You have successfully registered to the app.</p>",
+            }
+            sendMail(mail_info);
+
             res.redirect('/login') ;
             }
     }
