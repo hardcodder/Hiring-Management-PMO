@@ -14,6 +14,15 @@ const openingSchema = new Schema({
         type: String,
         default: 'OPENED'
     },
+    team: {
+        type: String,
+    },
+    priority: {
+        type: String,
+    },
+    position: {
+        type: String,
+    },
     date: {
         type: Date,
         default: Date.now

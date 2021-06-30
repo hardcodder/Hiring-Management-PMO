@@ -1,0 +1,37 @@
+<%- include('./includes/head.ejs') %>
+<link rel="stylesheet" type="text/css" href="css/register.css">
+<link rel="stylesheet" type="text/css" href="css/login.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://kit.fontawesome.com/0cfa224e02.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<body>
+    <div style="text-align: center;">
+        <h1>Openings</h1>
+    </div>
+    <hr/>
+
+    <table class="table table-hover table-dark">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Team Name</th>
+            <th scope="col">Budget Code</th>
+            <th scope="col">Status</th>
+            <th scope="col">Created On</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% openings.forEach(function callback(value, index) {%>
+          <tr>
+            <th scope="row"><%= index %></th>
+            <td><a href = "http://localhost:5000/getSingleRequest?requestId=<%=value.requestId%>"><%= value.team %></a></td>
+            <td><%= value.budgetCode %></td>
+            <td><%= value.status %></td>
+            <td><%= value.date.toDateString() %></td>
+          </tr>
+         <% }) %>
+        </tbody>
+      </table>
+    
+<%- include('./includes/end.ejs') %>

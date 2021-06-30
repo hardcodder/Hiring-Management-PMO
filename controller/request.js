@@ -560,7 +560,7 @@ module.exports.getApprovedRequests = async (req , res , next) => {
 module.exports.getApprovedFinanceRequests = async (req , res , next) => {
     try
     {
-        let requests = await Request.find({state : "APPROVED" , finance:true}) ;
+        let requests = await Request.find({state : "APPROVED" , finance:true , acknowledged:false}) ;
         res.render("get_approved_finance_requests.ejs" , 
         {
             path:'approved_finance_requests' ,

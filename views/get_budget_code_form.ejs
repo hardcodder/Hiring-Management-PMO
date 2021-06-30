@@ -7,7 +7,7 @@
     <body style="background-color: wheat;">
 
 <div class="con d-flex container-fluid justify-content-around row pt-5" >
-    <form class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-12 shadow mt-5" action="/generateBudgetCode" method="post">
+    <form class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-12 shadow mt-5" action="/postOpenings" method="post">
         
         <div style="text-align: center;">
             <h2>Enter The Budget Code</h2>
@@ -17,6 +17,10 @@
             <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2 _replace" type="text" name="position" readonly value="<%=request.requestBody.position%>">
         </div>
         
+        <div style="text-align: center;">
+            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2 _replace" type="hidden" name="requestId" value="<%=request._id%>">
+        </div>
+
         <div style="text-align: center;">
             <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" name="budgetCode" placeholder="Enter The Budget Code" value="">
         </div>
