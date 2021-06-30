@@ -14,6 +14,7 @@ module.exports.postSignup = async(req , res , next) =>
         let name = req.body.name ;
         let password = req.body.password ;
         let email = req.body.email ;
+        let team = req.body.team ;
 
         let user = await User.findOne({email : email}) ;
         if(user)
@@ -29,7 +30,8 @@ module.exports.postSignup = async(req , res , next) =>
             user = new User({
                 name:name ,
                 email : email ,
-                password : hashedPass
+                password : hashedPass ,
+                team : team
             }) ;
             user = await user.save() ;
             res.redirect('/login') ;
@@ -97,7 +99,7 @@ module.exports.postLogin = async (req , res , next) => {
             {
                 req.session.user = user ;
                 req.session.save( (err)=> {
-                    res.redirect('/') ;
+                    res.redirect('/getGeneratedRequests') ;
                 })
             }
             else
@@ -115,6 +117,22 @@ module.exports.postLogin = async (req , res , next) => {
                 type : "error"
             })
         }
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.json({
+            error : err
+        })
+    }
+}
+
+module.exports.getLogout = async (req , res , next) =>{
+    try
+    {
+        req.session.destroy( (err) => {
+            res.redirect('/') ;
+        })
     }
     catch(err)
     {

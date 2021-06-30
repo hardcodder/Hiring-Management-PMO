@@ -3,6 +3,9 @@ const mongoose = require('mongoose') ;
 const Schema = mongoose.Schema ;
 
 const requestSchema = new Schema({
+    finance:{
+        type:Boolean
+    } ,
     generatedBy : {
         type:String ,
         required : true 
@@ -34,13 +37,9 @@ const requestSchema = new Schema({
     date : {
         type : Date
     } ,
-    acknowledgement : {
-        acknowledged:{
-            type : Boolean 
-        } ,
-        reason : {
-            type : String 
-        }
+    acknowledged: {
+        type : Boolean ,
+        required : true 
     }
 }) ;
 

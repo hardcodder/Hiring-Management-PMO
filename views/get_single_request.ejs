@@ -38,6 +38,14 @@
             </div>
             <hr>
             <hr>
+
+            <div class="d-flex justify-content-between">
+                <h4>Reporting Manager</h4>
+                <h4><%=request.requestBody.reportingManager%></h4>
+            </div>
+            <hr>
+            <hr>
+
             <div class="d-flex justify-content-between">
                 <h4>Position</h4>
                 <h4><%=request.requestBody.position%></h4>
@@ -76,9 +84,19 @@
 
             <%}%>
             <br>
+
+            <%if(ta){%>
+                <a href="http://localhost:5000/getFinanceRequestForm?requestId=<%=request._id%>" type="button" class="btn btn-info" style="float: right;">
+                    Acknowledge
+                </a>
+            <%}%>
+
             <%if(generator){%>
             <a type="button" href="http://localhost:5000/getModifyForm?requestId=<%=request._id%>" class="btn btn-info ">
                 Modify
+            </a>
+            <a href="http://localhost:5000/getComments?requestId=<%=request._id%>" type="button" class="btn btn-info" style="float: right;">
+                Comments
             </a>
             <form action="/cancelRequest" method="POST" style="display: inline;">
                 <input type="hidden" name="requestId" value="<%=request._id%>">
@@ -86,12 +104,20 @@
                     Cancel
                 </button>
             </form>
-            
             <%}%>
-            <a href="http://localhost:5000/getComments?requestId=<%=request._id%>" type="button" class="btn btn-info" style="float: right;">
-                Comments
-            </a>
+            
+            
+
             <%if(approver){%>
+                <a href="http://localhost:5000/getComments?requestId=<%=request._id%>" type="button" class="btn btn-info" style="float: right;">
+                    Comments
+                </a>
+                <form action="/cancelRequest" method="POST" style="display: inline;">
+                    <input type="hidden" name="requestId" value="<%=request._id%>">
+                    <button type="submit" class="btn btn-danger ">
+                        Cancel
+                    </button>
+                </form>
                 <form action="/approveRequest" method="POST" style="display: inline;">
                     <input type="hidden" name="requestId" value="<%=request._id%>">
                     <button type="submit" class="btn btn-success ">
