@@ -1,0 +1,42 @@
+<%- include('./includes/head.ejs') %>
+    <link rel="stylesheet" type="text/css" href="css/register.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/0cfa224e02.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <body style="background-color: wheat;">
+
+<div class="con d-flex container-fluid justify-content-around row pt-5" >
+    <form class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-12 shadow mt-5" method="post">
+        <div style="text-align: center;">
+            <label for="budgetCode">Budget Code</label>
+            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" name="budgetCode" placeholder="Enter Budget Code" value="">
+        </div>
+        <div style="text-align: center;">
+            <label for="position">Select Position</label>
+                <select style="width: 80%; border-radius:20px;opacity: 0.8;margin: 0 auto;" class="form-control type" id="position" name="position">
+                    <option>SDE 1 BE</option>
+                    <option>SDE 1 FE</option>
+                    <option>SDE 2 BE</option>
+                    <option>SDE 2 FE</option>
+                    <option>SDE 3</option>
+                    <option>EM</option>
+                    <option>Director</option>
+                    <option>Sr. Director</option>
+                    <option>QA 1</option>
+                    <option>QA 2</option>
+                    <option>QA 3</option>
+                    <option>Data Analyst 1</option>
+                    <option>Data Analyst 2</option>
+                    <option>Data Scientist 1</option>
+                    <option>Data Scientist 2</option>
+                </select>
+        </div>
+        
+        <div style="text-align: center;">
+            <input style="width: 50%;border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="submit" placeholder = "Add">
+        </div>
+        
+    </form>
+</div>
+<%- include('./includes/end.ejs') %>

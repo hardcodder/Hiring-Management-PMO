@@ -35,12 +35,16 @@ const requestSchema = new Schema({
         }
     ] ,
     date : {
-        type : Date
+        type : Date,
+        default: Date.now
     } ,
-    acknowledged: {
-        type : Boolean ,
-        required : true 
-    }
+    acknowledged:{
+        type : Boolean,
+        default: false 
+    } ,
+    reason : {
+        type : String 
+    },
 }) ;
 
 module.exports = mongoose.model('Request' , requestSchema) ;

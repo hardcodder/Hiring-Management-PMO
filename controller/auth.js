@@ -1,9 +1,9 @@
 const bcrypt = require('bcryptjs') ;
 const jwt = require("jsonwebtoken") ;
 const User = require('../models/User') ;
+const {sendMail} = require('../utils');
 
-
-const JWT_SECRET = "INNOVACCER_SHAKTI"
+const JWT_SECRET = "INNOVACCER_SHAKTI" ;
 
 
 
@@ -34,6 +34,16 @@ module.exports.postSignup = async(req , res , next) =>
                 team : team
             }) ;
             user = await user.save() ;
+
+            const mail_info = 
+            {
+                to: user.email,
+                subject: "Registration Successful",
+                text: "Welcome" + user.name + " !",
+                html: "<p>You have successfully registered to the app.</p>",
+            }
+            sendMail(mail_info);
+
             res.redirect('/login') ;
             }
     }
@@ -99,7 +109,10 @@ module.exports.postLogin = async (req , res , next) => {
             {
                 req.session.user = user ;
                 req.session.save( (err)=> {
-                    res.redirect('/getGeneratedRequests') ;
+                    if(user.type === undefined || user.type === null) {
+                        return res.redirect('usertype');
+                    } 
+                    res.redirect('/') ;
                 })
             }
             else
@@ -141,4 +154,26 @@ module.exports.getLogout = async (req , res , next) =>{
             error : err
         })
     }
+}
+module.exports.getUserType = (req, res) => {
+    res.render('user_type.ejs', 
+        {
+            path:'user_type' ,
+            title:'UserType' ,
+        });
+}
+
+module.exports.postUserType = async (req, res) => 
+{
+    let type = req.body.customRadio;
+    let user = await User.findOne({email : req.user.email}) ;
+
+    // console.log(user);
+
+    if(user) {
+        user.type = type;
+        await user.save();
+    }
+
+    return res.redirect('/');
 }

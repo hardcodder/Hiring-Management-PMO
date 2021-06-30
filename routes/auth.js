@@ -15,4 +15,8 @@ router.post('/login' ,  authController.postLogin) ;
 
 router.get('/logout' , authController.getLogout) ;
 
+router.get('/usertype' , authController.getUserType) ;
+
+router.post('/usertype' , authController.postUserType) ;
+
 module.exports = router ;

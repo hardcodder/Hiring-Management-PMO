@@ -52,5 +52,7 @@ app.get('/getComments' , isAuth.isAuth , requestController.getComments) ;
 
 app.get('/getBudgetCodeForm' , isAuth.isAuth , requestController.getBudgetCodeForm) ;
 
+app.get('/allApprovedRequest' , isAuth.isAuth , requestController.getAllApprovedRequests) ;
 
+app.get('/getSingleApprovedRequest' , isAuth.isAuth , requestController.getSingleApprovedRequest) ;
 module.exports = app ;
