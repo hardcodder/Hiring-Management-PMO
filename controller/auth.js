@@ -5,8 +5,6 @@ const {sendMail} = require('../utils');
 
 const JWT_SECRET = "INNOVACCER_SHAKTI" ;
 
-
-
 module.exports.postSignup = async(req , res , next) => 
 {
     try

@@ -91,6 +91,14 @@
                 </a>
             <%}%>
 
+            <%if(ta){%>
+                <a href="http://localhost:5000/createOpening?requestId=<%=request._id%>&budgetCode=<%=request.requestBody.budgetCode%>" type="button" class="btn btn-info" style="float: right;">
+                    Acknowledge_himanshu
+                </a>
+            <%}%>
+
+
+
             <%if(generator){%>
             <a type="button" href="http://localhost:5000/getModifyForm?requestId=<%=request._id%>" class="btn btn-info ">
                 Modify

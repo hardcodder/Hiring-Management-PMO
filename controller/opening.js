@@ -56,7 +56,9 @@ module.exports.createOpening = async (req , res , next) => {
 
                 await request.save() ;
 
-                return res.send('we have initiated the request to the finance team!');
+                return res.redirect(`/getFinanceRequestForm?requestId=${request._id}`)
+
+                //return res.send('we have initiated the request to the finance team!');
             }
         }
         else
