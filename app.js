@@ -1,9 +1,12 @@
+require('dotenv').config();
 const express = require('express') ;
 const mongoose = require("mongoose");
 const bodyParser = require('body-parser') ;
 const cors = require('cors') ;
 const path = require('path') ;
 const session = require("express-session") ;
+const upload = require('express-fileupload');
+const Str = require('@supercharge/strings')
 const User = require('./models/User') ;
 
 const port = process.env.PORT || 5000 ;
@@ -11,6 +14,10 @@ const port = process.env.PORT || 5000 ;
 const authRouter = require('./routes/auth') ;
 
 const requestRouter = require('./routes/request') ;
+
+const budgetRouter = require('./routes/budgetCode') ;
+
+const openingRouter = require('./routes/opening') ;
 
 const app = express() ;
 
@@ -24,6 +31,8 @@ const store = new MongodbStore({
 })
 
 app.use(cors()) ;
+
+app.use(upload());
 
 app.use(bodyParser.json()) ;
 
@@ -50,9 +59,94 @@ app.use(async (req , res , next) => {
   next() ;
 })
 
+//................GOOGLE AUTH
+const passport = require('passport');
+var userProfile;
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.set('view engine', 'ejs');
+
+app.get('/success', async (req, res) => {
+  let email = userProfile.emails[0].value;
+  console.log('email', email);
+  let user = await User.findOne({email: email});
+
+  if(user)
+  {
+    console.log("here", user);
+    if(user.type === undefined || user.type === null) {
+      return res.redirect('usertype');
+    }
+    
+    return res.redirect('/');
+  }
+  else
+  {
+    user = new User ({
+      email: email,
+      name: userProfile.displayName,
+      password: Str.random(50),
+    });
+
+    await user.save() ;
+
+    return res.redirect('usertype');
+  }
+});
+
+app.get('/error', (req, res) => res.send("error logging in"));
+
+passport.serializeUser(function(user, cb) {
+  cb(null, user);
+});
+
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+passport.use(new GoogleStrategy({
+    clientID: GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
+    callbackURL: "http://localhost:5000/google/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+      userProfile=profile;
+      return done(null, userProfile);
+  }
+));
+ 
+app.get('/google', 
+  passport.authenticate('google', { scope : ['profile', 'email'] }));
+ 
+app.get('/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/error' }),
+  function(req, res) {
+    // Successful authentication, redirect success.
+
+    let email = userProfile.emails[0].value;
+    // if(email.search('@innovaccer.com') == -1) {
+    //   req.session = null;
+    //   req.logout();
+
+    //   return res.redirect('/error');
+    // }
+
+    res.redirect('/success');
+  });
+
+passport.deserializeUser(function(obj, cb) {
+  cb(null, obj);
+});
+//..........................end-GOOGLEAUTH
+
 app.use(authRouter) ;
 
 app.use(requestRouter) ;
+
+app.use(budgetRouter) ;
+
+app.use(openingRouter) ;
 
 mongoose
   .connect(MONGO_URI, {

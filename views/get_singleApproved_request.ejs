@@ -1,0 +1,80 @@
+<%- include('./includes/head.ejs') %>
+<link rel="stylesheet" type="text/css" href="css/register.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://kit.fontawesome.com/0cfa224e02.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<body>
+    <div class="d-flex justify-content-center">
+
+    <li style="list-style-type: none; font-family: 'Viga', sans-serif;color:black" class = "alert alert-success shadow p-3 mb-5 bg-white rounded col col-xl-8 col-lg-10 col-md-10 col-sm-10 col-10 mx-3">
+        <h4 style="text-align: center; ">Request</h4>
+        <hr>
+        <div class="d-flex justify-content-between">
+            <h4>Genereated By</h4>
+            <h4><%=request.generatedBy%></h4>
+        </div>
+        <hr>
+        <hr>
+
+        <div class="d-flex justify-content-between">
+            <h4>Status</h4>
+            <h4><%=request.state%></h4>
+        </div>
+        <hr>
+        <hr>
+
+        <div class="d-flex justify-content-between">
+            <h4>Approved By</h4>
+            <h4><%=request.toBeApprovedBy%></h4>
+        </div>
+        <hr>
+        <hr>
+
+        <div class="d-flex justify-content-between">
+            <h4>Type</h4>
+            <h4><%=request.requestBody.type%></h4>
+        </div>
+        <hr>
+        <hr>
+        <div class="d-flex justify-content-between">
+            <h4>Position</h4>
+            <h4><%=request.requestBody.position%></h4>
+        </div>
+        <hr>
+        <hr>
+        <div class="d-flex justify-content-between">
+            <h4>Business Case</h4>
+            <h4><%=request.requestBody.businessCase%></h4>
+        </div>
+        <hr>
+        <hr>
+        <%if(request.requestBody.type == 'New'){%>
+            <div class="d-flex justify-content-between">
+                <h4>Priority</h4>
+                <h4><%=request.requestBody.priority%></h4>
+            </div>
+            <hr>
+
+        <%}else{%>
+            <div class="d-flex justify-content-between">
+                <h4>Person Replacing</h4>
+                <h4><%=request.requestBody.personReplacing%></h4>
+            </div>
+            <hr>
+            <hr>
+            <div class="d-flex justify-content-between">
+                <h4>Budget Code</h4>
+                <h4><%=request.requestBody.budgetCode%></h4>
+            </div>
+
+        <%}%>
+        <br>
+        <a href="http://localhost:5000/createOpening?requestId=<%=request._id%>&budgetCode=<%=request.requestBody.budgetCode%>" type="button" class="btn btn-info" style="float: right;">
+            Acknowledge
+        </a>
+    </li>
+    <br>
+    <br>
+</div>
+<%- include('./includes/end.ejs') %>

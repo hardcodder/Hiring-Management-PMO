@@ -107,6 +107,9 @@ module.exports.postLogin = async (req , res , next) => {
             {
                 req.session.user = user ;
                 req.session.save( (err)=> {
+                    if(user.type === undefined || user.type === null) {
+                        return res.redirect('usertype');
+                    } 
                     res.redirect('/') ;
                 })
             }
@@ -133,4 +136,26 @@ module.exports.postLogin = async (req , res , next) => {
             error : err
         })
     }
+}
+
+module.exports.getUserType = (req, res) => {
+    res.render('user_type.ejs', 
+        {
+            path:'user_type' ,
+            title:'UserType' ,
+        });
+}
+
+module.exports.postUserType = async (req, res) => {
+    let type = req.body.customRadio;
+    let user = await User.findOne({email : req.user.email}) ;
+
+    // console.log(user);
+
+    if(user) {
+        user.type = type;
+        await user.save();
+    }
+
+    return res.redirect('/');
 }

@@ -31,4 +31,8 @@ app.post('/addComment' , isAuth.isAuth , requestController.addComment) ;
 app.post('/approveRequest' , isAuth.isAuth , requestController.approveRequest)
 
 app.get('/getComments' , isAuth.isAuth , requestController.getComments) ;
+
+app.get('/allApprovedRequest' , isAuth.isAuth , requestController.getAllApprovedRequests) ;
+
+app.get('/getSingleApprovedRequest' , isAuth.isAuth , requestController.getSingleApprovedRequest) ;
 module.exports = app ;

@@ -1,11 +1,13 @@
 const Request = require('../models/Request') ;
+const User = require('../models/User') ;
 const {sendMail} = require('../utils');
 
 module.exports.generateRequest = async(req , res , next) => 
 {
     try
     {
-        let generatedBy = req.user.email ;
+        // console.log(req.user);  
+        let generatedBy = req.user.email || req.user.emails[0].value;
         
         //need to vertify whether this email exists or not
         let toBeApprovedBy = req.body.toBeApprovedBy ;
@@ -45,7 +47,7 @@ module.exports.generateRequest = async(req , res , next) =>
             toBeApprovedBy : toBeApprovedBy ,
             requestBody : requestBody ,
             state : state ,
-            comments : comments
+            comments : comments,
         })
 
         console.log(request) ;
@@ -80,7 +82,8 @@ module.exports.getGeneratedRequests = async (req , res , next) =>
 {
     try
     {
-        let requests = await Request.find({generatedBy : req.user.email}) ;
+        let email = req.user.email || req.user.emails[0].value;
+        let requests = await Request.find({generatedBy : email}) ;
         res.render("get_generated_requests.ejs" , 
         {
             path:'generated_requests' ,
@@ -99,7 +102,8 @@ module.exports.getGeneratedRequests = async (req , res , next) =>
 module.exports.getToBeApprovedRequests = async (req , res , next) => {
     try
     {
-        let requests = await Request.find({toBeApprovedBy : req.user.email , state:"OPEN"}) ;
+        let user = req.user.email || req.user.emails[0].value;
+        let requests = await Request.find({toBeApprovedBy : user , state:"OPEN"}) ;
         res.render("to_be_approved_requests.ejs" , 
         {
             path:'to_be_approved_requests' ,
@@ -120,17 +124,18 @@ module.exports.getSingleRequest = async (req , res , next) => {
     {
         let requestId = req.query.requestId ;
         let request = await Request.findById(requestId) ;
+        let user = req.user.email || req.user.emails[0].value;
         if(request)
         {
-            if(request.generatedBy == req.user.email || request.toBeApprovedBy == req.user.email)
+            if(request.generatedBy == user || request.toBeApprovedBy == user)
             {
                 res.render("get_single_request.ejs" , 
                 {
                     path:'single_request' ,
                     title:'Single Request' ,
                     request: request ,
-                    generator: request.generatedBy == req.user.email ,
-                    approver : request.toBeApprovedBy == req.user.email 
+                    generator: request.generatedBy == user ,
+                    approver : request.toBeApprovedBy == user 
                 })
             }
             else
@@ -160,22 +165,23 @@ module.exports.addComment = async (req , res , next) => {
     {
         let requestId = req.body.requestId ;
         let request = await Request.findById(requestId) ;
+        let user = req.user.email || req.user.emails[0].value;
         if(request)
         {
-            if(request.generatedBy == req.user.email || request.toBeApprovedBy == req.user.email)
+            if(request.generatedBy == user || request.toBeApprovedBy == user)
             {
                 if(req.body.comment)
                 {
                     const comment = {
                         text : req.body.comment ,
-                        writtenBy : req.user.email 
+                        writtenBy : user
                     }
                     const comments = [comment , ...request.comments] ;
                     request.comments = comments ;
                 }
 
                 let send_to = request.generatedBy;
-                if(request.generatedBy == req.user.email) 
+                if(request.generatedBy == user) 
                 {
                     send_to = request.toBeApprovedBy;
                 }
@@ -222,9 +228,10 @@ module.exports.cancelRequest = async (req , res , next) => {
     {
         let requestId = req.body.requestId ;
         let request = await Request.findById(requestId) ;
+        let user = req.user.email || req.user.emails[0].value;
         if(request)
         {
-            if(request.generatedBy == req.user.email || request.toBeApprovedBy == req.user.email)
+            if(request.generatedBy == user || request.toBeApprovedBy == user)
             {
                 request.state = "CANCELLED" ;
                 await request.save() ;
@@ -259,9 +266,10 @@ module.exports.approveRequest = async (req , res , next) => {
     {
         let requestId = req.body.requestId ;
         let request = await Request.findById(requestId) ;
+        let user = req.user.email || req.user.emails[0].value;
         if(request)
         {
-            if(request.toBeApprovedBy == req.user.email)
+            if(request.toBeApprovedBy == user)
             {
                 request.state = "APPROVED" ;
                 await request.save() ;
@@ -296,9 +304,10 @@ module.exports.modifyRequest = async (req , res , next) => {
     {
         let requestId = req.body.requestId ;
         let request = await Request.findById(requestId) ;
+        let user = req.user.email || req.user.emails[0].value;
         if(request)
         {
-            if(request.generatedBy == req.user.email)
+            if(request.generatedBy == user)
             {
                //need to vertify whether this email exists or not
                 request.toBeApprovedBy = req.body.toBeApprovedBy ;
@@ -328,7 +337,7 @@ module.exports.modifyRequest = async (req , res , next) => {
                 {
                     const comment = {
                         text : req.body.comment ,
-                        writtenBy : req.user.email 
+                        writtenBy : user 
                     }
                     const comments = [comment , ...request.comments] ;
                     request.comments = comments ;
@@ -405,9 +414,10 @@ module.exports.getModifyForm = async(req , res , next) => {
     {
         let requestId = req.query.requestId ;
         let request = await Request.findById(requestId) ;
+        let user = req.user.email || req.user.emails[0].value;
         if(request)
         {
-            if(request.generatedBy == req.user.email || request.toBeApprovedBy == req.user.email)
+            if(request.generatedBy == user || request.toBeApprovedBy == user)
             {
                 res.render("modify_form.ejs" , 
                 {
@@ -445,9 +455,10 @@ module.exports.getComments = async(req , res , next) => {
     {
         let requestId = req.query.requestId ;
         let request = await Request.findById(requestId) ;
+        let user = req.user.email || req.user.emails[0].value;
         if(request)
         {
-            if(request.generatedBy == req.user.email || request.toBeApprovedBy == req.user.email)
+            if(request.generatedBy == user || request.toBeApprovedBy == user)
             {
                 res.render("getComments.ejs" , 
                 {
@@ -477,5 +488,89 @@ module.exports.getComments = async(req , res , next) => {
             message:"user already exists" ,
             type : "error"
         }) ; 
+    }
+}
+
+//TA team screen
+module.exports.getAllApprovedRequests = async (req , res , next) => 
+{
+    try
+    {
+        let email = req.user.email || req.user.emails[0].value;
+        let user = await User.findOne({email: email});
+
+        // console.log('user', user);
+
+        if(user.type != 'ta') 
+        {
+            return res.send("you are unauthorized to enter this area!");
+        }
+        let requests = await Request.find
+                    ({
+                        $and : [
+                            {state : "APPROVED"},
+                            {
+                                $or : [
+                                    {acknowledged: false}, 
+                                    {acknowledged: {$exists : false}}
+                                ]
+                            }
+                        ]
+                        
+                    }) ;
+
+        console.log("requests: ", requests);
+        res.render("get_allApproved_requests.ejs" , 
+        {
+            path:'allApproved_requests' ,
+            title:'Approved Requests' ,
+            requests: requests ,
+        })
+    }
+    catch(err)
+    {
+        res.json({
+            error : err
+        })
+    }
+}
+
+module.exports.getSingleApprovedRequest = async (req , res , next) => {
+    try
+    {
+        let email = req.user.email || req.user.emails[0].value;
+        let user = await User.findOne({email: email});
+        let requestId = req.query.requestId ;
+        let request = await Request.findById(requestId) ;
+        if(request)
+        {
+            if(user.type === 'ta')
+            {
+                res.render("get_singleApproved_request.ejs" , 
+                {
+                    path:'single_approved_request' ,
+                    title:'Single Approved Request' ,
+                    request: request ,
+                })
+            }
+            else
+            {
+                res.json({
+                    error : "You dont have the permission to view this request"
+                }) 
+            }
+        }
+        else
+        {
+            res.json({
+                error : "No such request exist"
+            })
+        }
+    }
+    catch(err)
+    {
+        res.json({
+            error : err
+        })
     }
 }

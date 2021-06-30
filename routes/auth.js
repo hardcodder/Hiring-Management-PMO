@@ -13,4 +13,8 @@ router.post('/signup' , authController.postSignup) ;
 
 router.post('/login' ,  authController.postLogin) ;
 
+router.get('/usertype' , authController.getUserType) ;
+
+router.post('/usertype' , authController.postUserType) ;
+
 module.exports = router ;
