@@ -109,8 +109,19 @@ module.exports.postLogin = async (req , res , next) => {
                 req.session.save( (err)=> {
                     if(user.type === undefined || user.type === null) {
                         return res.redirect('usertype');
-                    } 
-                    res.redirect('/') ;
+                    }
+                    if(user.team == "hire")
+                    {
+                        res.redirect('/getGeneratedRequests') ;
+                    }
+                    else if(user.team == "ta")
+                    {
+                        res.redirect('/getApprovedRequests') ;
+                    }
+                    else
+                    {
+                        res.redirect('/getApprovedFinanceRequests') ;
+                    }
                 })
             }
             else
@@ -142,7 +153,7 @@ module.exports.getLogout = async (req , res , next) =>{
     try
     {
         req.session.destroy( (err) => {
-            res.redirect('/') ;
+            res.redirect('/login') ;
         })
     }
     catch(err)

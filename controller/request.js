@@ -56,6 +56,8 @@ module.exports.generateRequest = async(req , res , next) =>
 
         await request.save() ;
 
+        res.redirect('/getGeneratedRequests') ;
+
         let url = `http://localhost:5000/getSingleRequest?requestId=${request._id}`
         const mail_info = 
             {
@@ -123,7 +125,7 @@ module.exports.generateFinanceRequest = async (req , res , next) => {
 
         await request.save() ;
 
-        res.redirect('/getGeneratedRequests') ;
+        res.redirect('/getGeneratedFinanceRequests') ;
     }
     catch(err)
     {
@@ -363,9 +365,10 @@ module.exports.addComment = async (req , res , next) => {
                     sendMail(mail_info);
 
                 await request.save() ;
-                res.json({
-                    message:"Commented"
-                })
+                // res.json({
+                //     message:"Commented"
+                // })
+                res.redirect(`getComments?requestId=${request._id}`) ;
             }
             else
             {
@@ -439,6 +442,14 @@ module.exports.approveRequest = async (req , res , next) => {
             {
                 request.state = "APPROVED" ;
                 await request.save() ;
+                if(user.team == "hire")
+                {
+                    res.redirect('/getToBeApprovedRequests') ;
+                }
+                else
+                {
+                    res.redirect('/getToBeApprovedFinanceRequests') ;
+                }
                 res.json({
                     message : "approved"
                 })
