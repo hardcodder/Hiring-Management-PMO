@@ -7,7 +7,26 @@
 
 <body style="background-color: wheat;">
 
+
+    <div class="d-flex justify-content-around">
+        <h3>You can see the request based on status of requests</h3>
+    </div>
+    <br>
+    <div class="d-flex justify-content-around">
+        <a href="http://localhost:5000/getGeneratedRequests?state=open" class="btn btn-danger" style="color: white;">
+            Unapproved Requests :- <b><%=unapproved%></b>
+        </a>
+        <a href="http://localhost:5000/getGeneratedRequests?state=approved" class="btn btn-success" style="color: white;">
+            Approved Requests :- <b><%=approved%></b>
+        </a>
+    </div>
+
+    <br>
+    <hr>
+    <hr>
     <div class="d-flex justify-content-center">
+
+       
         
         <ul class="d-flex row justify-content-center p-xl-3 p-lg-3 p-md-2 p-1 persons-ul">
             <%requests.forEach(request => {%>

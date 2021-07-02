@@ -9,32 +9,44 @@
 <div class="con d-flex container-fluid justify-content-around row pt-5" >
     <form class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-12 shadow mt-5" action="/generateFinanceRequest" method="post">
         <div style="text-align: center;">
-            <h1>Confirm The Request</h1>
+            <h5>No Budget code is available for this position.</h5>
+            <h5>You need to make a request to finance team.</h5>
+            <hr>
+            <h2>Confirm The Request</h2>
+        </div>
+        <hr>
+        <hr>
+        <div style="text-align: center;">
+            <label for="toBeApprovedBy"><b>Approver Email</b></label><br>
+            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" id="toBeApprovedBy" name="toBeApprovedBy" placeholder="Enter Your Approver Email" value="">
         </div>
         <div style="text-align: center;">
-            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" name="toBeApprovedBy" placeholder="Enter Your Approver Email" value="">
+            <label for="reportingManager"><b>Reporting Manager Email</b></label><br>
+            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" id="reportingManager" name="reportingManager" placeholder="Enter Reporting Manager Email" readonly value="<%=request.requestBody.reportingManager%>">
         </div>
         <div style="text-align: center;">
-            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" name="reportingManager" placeholder="Enter Reporting Manager Email" readonly value="<%=request.requestBody.reportingManager%>">
+            <label for="prior" ><b>Priority</b></label><br>
+            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2 _new" type="text" id="prior" name="prior"  placeholder="Enter the priority" readonly value="<%=request.requestBody.priority%>">
         </div>
         <div style="text-align: center;">
-            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2 _new" type="text" name="prior"  placeholder="Enter the priority" readonly value="<%=request.requestBody.priority%>">
+            <label for="team"><b>Team Name</b></label><br>
+            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" id="team" name="team" placeholder="Enter the team name" readonly value="<%=request.requestBody.team%>">
         </div>
         <div style="text-align: center;">
-            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" name="team" placeholder="Enter the team name" readonly value="<%=request.requestBody.team%>">
+            <label for="position"><b>Select Position</b></label>
+            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" id="position" name="position" placeholder="Enter the position" readonly value="<%=request.requestBody.position%>">
         </div>
         <div style="text-align: center;">
-            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" name="position" placeholder="Enter the position" readonly value="<%=request.requestBody.position%>">
+            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="hidden" id="refId" name="refId" value="<%=request._id%>">
         </div>
         <div style="text-align: center;">
-            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="hidden" name="refId" value="<%=request._id%>">
-        </div>
-        <div style="text-align: center;">
-            <textarea style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" name="BusinessCase" placeholder="Enter the business case" readonly value=""><%=request.requestBody.businessCase%></textarea>
+            <label for="BusinessCase"><b>Business Case</b></label><br>
+            <textarea style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" id="BusinessCase" name="BusinessCase" placeholder="Enter the business case" readonly value=""><%=request.requestBody.businessCase%></textarea>
         </div>
         
         <div style="text-align: center;">
-            <textarea style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" name="comment" placeholder="Enter the message for approver" value=""></textarea>
+            <label for="comment"><b>Message for Approver</b></label><br>
+            <textarea style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" id="comment" name="comment" placeholder="Enter the message for approver" value=""></textarea>
         </div>
 
         <div style="text-align: center;">

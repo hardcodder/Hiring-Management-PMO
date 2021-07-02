@@ -110,7 +110,7 @@ module.exports.postLogin = async (req , res , next) => {
                     if(user.type === undefined || user.type === null) {
                         return res.redirect('usertype');
                     }
-                    if(user.team == "hire")
+                    if(user.team == "hiring")
                     {
                         res.redirect('/getGeneratedRequests') ;
                     }

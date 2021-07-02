@@ -31,15 +31,18 @@ module.exports.generateRequest = async(req , res , next) =>
             requestBody.budgetCode = req.body.budgetCode ;
         }
 
-        let comment = {
-            text : req.body.comment ,
-            writtenBy : generatedBy
+        let comments = [] ;
+
+        if(req.body.comment)
+        {
+            let comment = {
+                text : req.body.comment ,
+                writtenBy : generatedBy
+            }
+    
+            comments = [comment] ;
         }
-
-        let comments = [comment] ;
-
-        console.log(typeof requestBody)
-
+        
         let state = "OPEN" ;
 
         let request = new Request({
@@ -56,7 +59,7 @@ module.exports.generateRequest = async(req , res , next) =>
 
         await request.save() ;
 
-        res.redirect('/getGeneratedRequests') ;
+        res.redirect(`/getSingleRequest?requestId=${request._id}`) ;
 
         let url = `http://localhost:5000/getSingleRequest?requestId=${request._id}`
         const mail_info = 
@@ -141,16 +144,45 @@ module.exports.getGeneratedRequests = async (req , res , next) =>
     try
     {
         let email = req.user.email || req.user.emails[0].value;
-        let requests = await Request.find({generatedBy : email , finance:false}) ;
-        res.render("get_generated_requests.ejs" , 
+
+        let approved = await Request.countDocuments({generatedBy : email , finance:false , state:"APPROVED"}) ;
+
+        let unapproved = await Request.countDocuments({generatedBy : email , finance:false , state:"OPEN"}) ;
+
+        let requests ;
+
+        if(req.query.state == null || req.query.state == '' || req.query.state == undefined)
         {
-            path:'generated_requests' ,
-            title:'Generated Requests' ,
-            requests: requests ,
-        })
+            requests = await Request.find({generatedBy : email , finance:false}) ;
+            
+        }
+        else if(req.query.state == 'approved')
+        {
+
+            requests = await Request.find({generatedBy : email , finance:false , state:"APPROVED"}) ;
+             
+        }
+        else if(req.query.state == 'open')
+        {
+            requests = await Request.find({generatedBy : email , finance:false , state:"OPEN"}) ;
+             
+        }
+        else
+        {
+            requests = await Request.find({generatedBy : email , finance:false}) ;  
+        }
+        res.render("get_generated_requests.ejs" , 
+            {
+                path:'generated_requests' ,
+                title:'Generated Requests' ,
+                requests: requests ,
+                approved : approved , 
+                unapproved : unapproved 
+            })
     }
     catch(err)
     {
+        console.log(err) ;
         res.json({
             error : err
         })
@@ -161,12 +193,35 @@ module.exports.getGeneratedFinanceRequests = async (req , res , next) =>
 {
     try
     {
-        let requests = await Request.find({generatedBy : req.user.email , finance:true}) ;
+        let approved = await Request.countDocuments({generatedBy : email , finance:false , state:"APPROVED"}) ;
+
+        let unapproved = await Request.countDocuments({generatedBy : email , finance:false , state:"OPEN"}) ;
+
+        let requests ;
+
+        if(req.query.state == null || req.query.state == '' || req.query.state == undefined)
+        {
+            requests = await Request.find({generatedBy : email , finance:false}) ;
+        }
+        else if(req.query.state == 'approved')
+        {
+            requests = await Request.find({generatedBy : email , finance:false , state:"APPROVED"}) ;   
+        }
+        else if(req.query.state == 'open')
+        {
+            requests = await Request.find({generatedBy : email , finance:false , state:"OPEN"}) ;
+        }
+        else
+        {
+            requests = await Request.find({generatedBy : email , finance:false}) ;  
+        }
         res.render("get_genereated_finance_requests.ejs" , 
         {
             path:'generated_finance_requests' ,
             title:'Generated Finance Requests' ,
             requests: requests ,
+            approved : approved , 
+            unapproved : unapproved 
         })
     }
     catch(err)
@@ -442,7 +497,7 @@ module.exports.approveRequest = async (req , res , next) => {
             {
                 request.state = "APPROVED" ;
                 await request.save() ;
-                if(user.team == "hire")
+                if(req.user.team == "hiring")
                 {
                     res.redirect('/getToBeApprovedRequests') ;
                 }
@@ -552,13 +607,65 @@ module.exports.modifyRequest = async (req , res , next) => {
 module.exports.getApprovedRequests = async (req , res , next) => {
     try
     {
-        let requests = await Request.find({state : "APPROVED" , acknowledged:false}) ;
-        res.render("get_approved_requests.ejs" , 
+        console.log(req.query) ;
+        let application = 0 ;
+        let infra = 0 ;
+        let product = 0 ;
+        let team4 = 0 ;
+        if(req.query.team == null || req.query.team == "" || req.query.team == undefined)
         {
-            path:'approved_requests' ,
-            title:'Approved Requests' ,
-            requests: requests ,
-        })
+            let requests = await Request.find({state : "APPROVED" , acknowledged:false}) ;
+            res.render("get_approved_requests.ejs" , 
+            {
+                path:'approved_requests' ,
+                title:'Approved Requests' ,
+                requests: requests ,
+                application : application ,
+                infra:infra ,
+                product : product ,
+                team4:team4
+            })
+        }
+        else
+        {
+            let requests = await Request.find({state : "APPROVED" , acknowledged:false}) ;
+
+            
+
+            let new_requests = requests.filter((rqst => {
+                if(rqst.requestBody.team == "APPLICATION")
+                {
+                    application++ ;
+                }
+                else if(rqst.requestBody.team == "INFRA")
+                {
+                    infra++ ;
+                }
+                else if(rqst.requestBody.team == "PRODUCT")
+                {
+                    product++ ;
+                }
+                else if(rqst.requestBody.team == "TEAM4")
+                {
+                    team4++ ;
+                }
+
+                return rqst.requestBody.team == req.query.team
+            }))
+
+            console.log(requests) ;
+            res.render("get_approved_requests.ejs" , 
+            {
+                path:'approved_requests' ,
+                title:'Approved Requests' ,
+                requests: new_requests ,
+                application : application ,
+                infra:infra ,
+                product : product ,
+                team4:team4
+            })
+        }
+        
     }
     catch(err)
     {

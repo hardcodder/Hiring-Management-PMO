@@ -7,6 +7,29 @@
 
 <body style="background-color: wheat;">
 
+    <div class="d-flex justify-content-around">
+        <h3>You can see the request based on teams</h3>
+    </div>
+    <br>
+    <div class="d-flex justify-content-around">
+        <a href="http://localhost:5000/getApprovedRequests?team=APPLICATION" class="btn btn-danger" style="color: white;">
+            APPLICATION :- <b><%=application%></b>
+        </a>
+        <a href="http://localhost:5000/getApprovedRequests?team=INFRA" class="btn btn-success" style="color: white;">
+            INFRA :- <b><%=infra%></b>
+        </a>
+        <a href="http://localhost:5000/getApprovedRequests?team=PRODUCT" class="btn btn-danger" style="color: white;">
+            PRODUCT :- <b><%=product%></b>
+        </a>
+        <a href="http://localhost:5000/getApprovedRequests?team=TEAM4" class="btn btn-success" style="color: white;">
+            TEAM4 :- <b><%team4%></b>
+        </a>
+    </div>
+
+    <br>
+    <hr>
+    <hr>
+
     <div class="d-flex justify-content-center">
         
         <ul class="d-flex row justify-content-center p-xl-3 p-lg-3 p-md-2 p-1 persons-ul">
