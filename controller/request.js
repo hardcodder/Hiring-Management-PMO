@@ -105,12 +105,19 @@ module.exports.generateFinanceRequest = async (req , res , next) => {
         tempReq.acknowledged = true ;
         await tempReq.save() ;
 
-        let comment = {
-            text : req.body.comment ,
-            writtenBy : generatedBy
-        }
+        let comments = [] ;
 
-        let comments = [comment] ;
+        if(req.body.comment)
+        {
+            let comment = {
+                text : req.body.comment ,
+                writtenBy : generatedBy
+            }
+
+            comments = [comment] ;
+        }  
+
+        console.log(comments) ;
 
         let state = "OPEN" ;
 
@@ -193,27 +200,29 @@ module.exports.getGeneratedFinanceRequests = async (req , res , next) =>
 {
     try
     {
-        let approved = await Request.countDocuments({generatedBy : email , finance:false , state:"APPROVED"}) ;
+        let email = req.user.email;
 
-        let unapproved = await Request.countDocuments({generatedBy : email , finance:false , state:"OPEN"}) ;
+        let approved = await Request.countDocuments({generatedBy : email , finance:true , state:"APPROVED"}) ;
+
+        let unapproved = await Request.countDocuments({generatedBy : email , finance:true , state:"OPEN"}) ;
 
         let requests ;
 
         if(req.query.state == null || req.query.state == '' || req.query.state == undefined)
         {
-            requests = await Request.find({generatedBy : email , finance:false}) ;
+            requests = await Request.find({generatedBy : email , finance:true}) ;
         }
         else if(req.query.state == 'approved')
         {
-            requests = await Request.find({generatedBy : email , finance:false , state:"APPROVED"}) ;   
+            requests = await Request.find({generatedBy : email , finance:true , state:"APPROVED"}) ;   
         }
         else if(req.query.state == 'open')
         {
-            requests = await Request.find({generatedBy : email , finance:false , state:"OPEN"}) ;
+            requests = await Request.find({generatedBy : email , finance:true , state:"OPEN"}) ;
         }
         else
         {
-            requests = await Request.find({generatedBy : email , finance:false}) ;  
+            requests = await Request.find({generatedBy : email , finance:true}) ;  
         }
         res.render("get_genereated_finance_requests.ejs" , 
         {
@@ -226,6 +235,7 @@ module.exports.getGeneratedFinanceRequests = async (req , res , next) =>
     }
     catch(err)
     {
+        console.log(err) ;
         res.json({
             error : err
         })
@@ -288,7 +298,8 @@ module.exports.getSingleRequest = async (req , res , next) => {
                     request: request ,
                     generator: request.generatedBy == req.user.email ,
                     approver : request.toBeApprovedBy == req.user.email ,
-                    ta : req.user.team == "ta"
+                    ta : req.user.team == "ta" ,
+                    acknowledged : request.acknowledged
                 })
             }
             else
@@ -615,6 +626,26 @@ module.exports.getApprovedRequests = async (req , res , next) => {
         if(req.query.team == null || req.query.team == "" || req.query.team == undefined)
         {
             let requests = await Request.find({state : "APPROVED" , acknowledged:false}) ;
+            let new_requests = requests.filter((rqst => {
+                if(rqst.requestBody.team == "APPLICATION")
+                {
+                    application++ ;
+                }
+                else if(rqst.requestBody.team == "INFRA")
+                {
+                    infra++ ;
+                }
+                else if(rqst.requestBody.team == "PRODUCT")
+                {
+                    product++ ;
+                }
+                else if(rqst.requestBody.team == "TEAM4")
+                {
+                    team4++ ;
+                }
+
+                return rqst.requestBody.team == req.query.team
+            }))
             res.render("get_approved_requests.ejs" , 
             {
                 path:'approved_requests' ,

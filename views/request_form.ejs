@@ -10,11 +10,11 @@
     <form class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-12 shadow mt-5" action="/generateRequest" method="post">
         <div style="text-align: center;">
             <label for="toBeApprovedBy"><b>Approver Email</b></label><br>
-            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" id="toBeApprovedBy" name="toBeApprovedBy" placeholder="Enter Your Approver Email" value="" title = "some message">
+            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" id="toBeApprovedBy" name="toBeApprovedBy" placeholder="Enter Your Approver Email" value="" title = "Email of the higher authority who will approve this request">
         </div>
         <div style="text-align: center;">
             <label for="exampleFormControlSelect1"><b>Select Type</b></label>
-            <select style="width: 80%; border-radius:20px;opacity: 0.8;margin: 0 auto;" class="form-control type" id="exampleFormControlSelect1" name="type">
+            <select style="width: 80%; border-radius:20px;opacity: 0.8;margin: 0 auto;" class="form-control type" id="exampleFormControlSelect1" name="type" title="Select the type of request you want to create">
               <option>New</option>
               <option>Replacement</option>
             </select>
@@ -77,7 +77,7 @@
         
         <div style="text-align: center;">
             <label for="comment"><b>Message for Approver</b></label><br>
-            <textarea style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" id="comment" name="comment" placeholder="Enter the message for approver" value=""></textarea>
+            <textarea style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" id="comment" name="comment" placeholder="Enter the message for approver" value="" title="Optional message for approver if you want to write something"></textarea>
         </div>
 
         <div style="text-align: center;">

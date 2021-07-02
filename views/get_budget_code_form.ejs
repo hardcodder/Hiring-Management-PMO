@@ -14,7 +14,8 @@
         </div>
 
         <div style="text-align: center;">
-            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2 _replace" type="text" name="position" readonly value="<%=request.requestBody.position%>">
+            <label for="position"><b>Position</b></label><br>
+            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2 _replace" type="text" id="position" name="position" readonly value="<%=request.requestBody.position%>">
         </div>
         
         <div style="text-align: center;">
@@ -22,7 +23,8 @@
         </div>
 
         <div style="text-align: center;">
-            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" name="budgetCode" placeholder="Enter The Budget Code" value="">
+            <label for="budgetCode"><b>Budget Code</b></label><br>
+            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" id="budgetCode" name="budgetCode" placeholder="Enter The Budget Code" value="">
         </div>
         <div style="text-align: center;">
             <input style="width: 50%;border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="submit" placeholder = "Sign in">
