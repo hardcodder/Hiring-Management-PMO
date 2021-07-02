@@ -19,6 +19,8 @@ const budgetRouter = require('./routes/budgetCode') ;
 
 const openingRouter = require('./routes/opening') ;
 
+const hiredEmpRouter = require('./routes/hiredEmp') ;
+
 const app = express() ;
 
 const MONGO_URI = `mongodb+srv://innovaccer:innovaccer@cluster0.cut4t.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
@@ -147,6 +149,8 @@ app.use(requestRouter) ;
 app.use(budgetRouter) ;
 
 app.use(openingRouter) ;
+
+app.use(hiredEmpRouter) ;
 
 mongoose
   .connect(MONGO_URI, {

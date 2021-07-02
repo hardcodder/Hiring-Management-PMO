@@ -14,6 +14,9 @@ const budgetCodeSchema = new Schema({
     },
     status : {
         type : String ,
+    },
+    assignedTo: {
+        type: String
     }
 }) ;
 

@@ -117,7 +117,7 @@ module.exports.createOpening = async (req , res , next) => {
         
                 await opening.save() ;
 
-                availableCode.status = 'Assigned';
+                availableCode.status = 'Opening Assigned';
 
                 await availableCode.save() ;
 
@@ -226,7 +226,7 @@ module.exports.postOpenings = async (req, res, next) => {
 
             await openings[0].save() ;
             
-            code.status = 'Assigned';
+            code.status = 'Opening Assigned';
 
             await code.save() ;
 

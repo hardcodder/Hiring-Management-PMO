@@ -48,7 +48,7 @@ module.exports.createBudgetCode = async (req, res , next) => {
 module.exports.getBudgetCodes = async (req, res , next) => {
     try
     {
-        let budgetCodes = await BudgetCode.find({});
+        let budgetCodes = await BudgetCode.find({status : {$ne : 'FTE Assigned'}});
 
         let count = budgetCodes.length;
         res.render("get_allBudgetCode.ejs" , 
@@ -79,6 +79,8 @@ module.exports.getFilteredBudgetCodes = async (req, res , next) => {
 
         if(req.body.status != 'Status')
         obj.status = req.body.status;
+        else 
+        obj.status = { $ne: 'FTE Assigned' } ;
 
         let budgetCodes = await BudgetCode.find(obj);
 
@@ -87,6 +89,37 @@ module.exports.getFilteredBudgetCodes = async (req, res , next) => {
         {
             path:'get_filteredBudgetCode' ,
             title:'BudgetCodes' ,
+            budgetCodes: budgetCodes,
+            count: count 
+        })
+    }
+    catch(err)
+    {
+        console.log(err) ;
+        res.json({
+            error : err
+        })
+    }
+}
+
+module.exports.getAllocatedBudgetCodes = async (req, res , next) => {
+    try
+    {
+        // console.log("filters", req.body);
+
+        let obj = {};
+        if(req.body.position != 'Position' && req.body.position != '' && req.body.position != undefined && req.body.position != null)
+        obj.position = req.body.position;
+
+        obj.status = 'FTE Assigned';
+
+        let budgetCodes = await BudgetCode.find(obj);
+
+        let count = budgetCodes.length;
+        res.render("get_allocatedBudgetCodes.ejs" , 
+        {
+            path:'get_allocatedBudgetCode' ,
+            title:'FTE Allocated BudgetCodes' ,
             budgetCodes: budgetCodes,
             count: count 
         })
