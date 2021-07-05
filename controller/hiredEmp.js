@@ -251,18 +251,31 @@ module.exports.getAllRequest = async(req, res, next) => {
 module.exports.postAllRequest = async(req, res, next) => {
     try{
         let request = [];
-        if(req.body.position === 'Team Manager') {
+        if(req.body.depart === 'Team Manager') {
             request = await Request.find({finance: false});
         }
         else {
             request = await Request.find({finance: true});
         }
 
+        let mrequest = []
+        if(req.body.position != 'Position') {
+            for(value of request) {
+                // console.log(value.requestBody.position, req.body.position);
+                if(value.requestBody.position === req.body.position) {
+                    mrequest.push(value);
+                }
+            }
+        }
+        else {
+            mrequest = request;
+        }
+
         res.render("get_req.ejs" , 
         {
             path:'get_req' ,
             title:'All Requests' ,
-            request: request,
+            request: mrequest,
         })
     }
     catch(err)
