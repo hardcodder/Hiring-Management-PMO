@@ -19,7 +19,11 @@ const empSchema = new Schema({
     },
     budgetCode: {
         type: String,
-    }
+    },
+    requestAssigned: {
+        type: Schema.ObjectId,
+        ref: 'Request'
+    },
 
 }) ;
 

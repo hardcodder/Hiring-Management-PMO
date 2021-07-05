@@ -26,7 +26,11 @@
           <tr>
             <th scope="row"><%= index %></th>
             <td><a href = "http://localhost:5000/getSingleRequest?requestId=<%=value.requestId%>"><%= value.team %></a></td>
-            <td><%= value.budgetCode %></td>
+            <% if(value.budgetCode === '$') { %>
+              <td>UNASSIGNED</td>
+            <% } else { %>
+              <td><%= value.budgetCode %></td>
+            <% } %>
             <td><%= value.status %></td>
             <td><%= value.date.toDateString() %></td>
           </tr>

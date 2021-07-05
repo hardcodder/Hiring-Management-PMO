@@ -62,6 +62,7 @@ module.exports.assignBudgetCodeToEmp = async (req, res) => {
                 team: request.requestBody.team,
                 position: employee.position,
                 budgetCode: opening.budgetCode,
+                requestAssigned: request._id
             });
             await emp.save();
 
@@ -70,6 +71,8 @@ module.exports.assignBudgetCodeToEmp = async (req, res) => {
             console.log('code', code);
             code.status = 'FTE Assigned';
             code.assignedTo = employee.email;
+            code.team = request.requestBody.team;
+            code.reportingManager = request.requestBody.reportingManager;
 
             await code.save();
 
@@ -147,7 +150,15 @@ module.exports.getFilteredUnallocatedHiredEmp = async (req, res) => {
 module.exports.getHiredEmp = async (req, res) => {
     try
     {
-        let emp = await Emp.find({});
+        let emp = await Emp.find({}).populate('requestAssigned').exec();
+        let hiredEmp = await HiredEmp.find({});
+
+        console.log('emp', emp);
+        for(value of hiredEmp) {
+            value.budgetCode = 'UNASSIGNED';
+        }
+        emp = [...emp, ...hiredEmp];
+
         res.render("get_emp.ejs" , 
         {
             path:'get_emp' ,
@@ -174,12 +185,37 @@ module.exports.getFilteredHiredEmp = async (req, res) => {
             obj.position = position;
         }
 
-        let emp = await Emp.find(obj);
+        let emp = await Emp.find(obj).populate('requestAssigned').exec();
+        let hiredEmp = await HiredEmp.find(obj);
+
+        // console.log('emp', emp);
+        for(value of hiredEmp) {
+            value.budgetCode = 'UNASSIGNED';
+        }
+        emp = [...emp, ...hiredEmp];
+
         res.render("get_emp.ejs" , 
         {
             path:'get_emp' ,
             title:'Hired Employees' ,
             emp: emp,
+        })
+    }
+    catch(err)
+    {
+        res.json({
+            message:"Please try again!" ,
+            type : "error"
+        }) ; 
+    }
+}
+
+module.exports.tableHandler = async(req, res, next) => {
+    try{
+        res.render("tableHandler.ejs" , 
+        {
+            path:'tableHandler' ,
+            title:'Table List' ,
         })
     }
     catch(err)
