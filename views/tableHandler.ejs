@@ -1,52 +1,51 @@
 <%- include('./includes/head.ejs') %>
 <link rel="stylesheet" type="text/css" href="css/register.css">
-<link rel="stylesheet" type="text/css" href="css/login.css">
+<link rel="stylesheet" type="text/css" href="css/table_card.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://kit.fontawesome.com/0cfa224e02.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-<body>
-    <div style="text-align: center;">
-        <h1>Tables</h1>
-    </div>
-    <!-- <br/> -->
-    <hr/>
-    <div class="col" style="margin: 0 auto; margin-top: 2%;">
-        <div class="row-sm-3" style = "max-width: 280px; margin: 0 auto;">
-          <div class="card">
+<body style="background-color: rgba(255,164,0, 0.04999999701976776);">
+  <%- include('./includes/nav.ejs') %>
+
+    <div class="d-flex row justify-content-center" style="text-align: center;margin-top: 100px;">
+        <div class="col-3 m-3">
+          <div class="card table_card">
             <div class="card-body">
-              <h6 class="card-title">Budget Codes Table</h6>
-              <a href="http://localhost:5000/getBudgetCodes" class="btn btn-primary">View</a>
+              <h5 class="card-title">Budget Codes Table</h5>
+              <a href="http://localhost:5000/getBudgetCodes" class="btn">View</a>
             </div>
           </div>
         </div>
         <br/>
-        <div class="row-sm-3" style = "max-width: 280px; margin: 0 auto;">
-            <div class="card">
+        <div class="col-3 m-3">
+            <div class="card table_card">
               <div class="card-body">
-                <h6 class="card-title">FTE Allocated / Offered Budget Codes Table</h6>
-                <a href="http://localhost:5000/getAllocatedBudgetCodes" class="btn btn-primary">View</a>
+                <h5 class="card-title">FTE Allocated / Offered Budget Codes Table</h5>
+                <a href="http://localhost:5000/getAllocatedBudgetCodes" class="btn">View</a>
               </div>
             </div>
         </div>
         <br/>
-        <div class="row-sm-3" style = "max-width: 280px; margin: 0 auto;">
-            <div class="card">
+        <div class="col-3 m-3">
+            <div class="card table_card">
               <div class="card-body">
-                <h6 class="card-title">Openings Table</h6>
-                <a href="http://localhost:5000/getOpenings" class="btn btn-primary">View</a>
+                <h5 class="card-title">Openings Table</h5>
+                <a href="http://localhost:5000/getOpenings" class="btn">View</a>
               </div>
             </div>
           </div>
           <br/>
-          <div class="row-sm-3" style = "max-width: 280px; margin: 0 auto;">
-            <div class="card">
+          <div class="col-3 m-3">
+            <div class="card table_card">
               <div class="card-body">
-                <h6 class="card-title">Employee Table</h6>
-                <a href="http://localhost:5000/getHiredEmp" class="btn btn-primary">View</a>
+                <h5 class="card-title">Employee Table</h5>
+                <a href="http://localhost:5000/getHiredEmp" class="btn">View</a>
               </div>
             </div>
           </div>
       </div>
+
+      
     
 <%- include('./includes/end.ejs') %>

@@ -1,0 +1,41 @@
+body div h1
+{
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 600;
+}
+
+body form
+{
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.sel-btn .btn
+{
+    border: 2px #e83e8c solid;
+    color: #e83e8c;
+    border-radius: 20px;
+    padding: 0;
+    width: 80px;
+    font-size: 1.2rem;
+}
+
+.sel-btn .btn:hover
+{
+    border: 2px #e83e8c solid;
+    color: white;
+    border-radius: 20px;
+    background-color: #e83e8c;
+    padding: 0;
+    width: 80px;
+}
+
+body table
+{
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+body table tbody tr td a:hover 
+{
+    color: #e83e8c;
+    text-decoration: none;
+}

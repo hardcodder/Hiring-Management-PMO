@@ -1,0 +1,40 @@
+.table_card
+{
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 600;
+    font-size: 1.4rem;
+}
+
+.table_card .card-body
+{
+    border-radius: 20px;
+}
+
+.table_card:hover h5
+{
+    color: #e83e8c;  
+}
+
+.table_card:hover 
+{
+    border: 1px #e83e8c solid;
+}
+
+.table_card .card-body .btn
+{
+    border: 2px #e83e8c solid;
+    color: #e83e8c;
+    border-radius: 20px;
+    padding: 0;
+    width: 80px;
+}
+
+.table_card .card-body .btn:hover
+{
+    border: 2px #e83e8c solid;
+    color: white;
+    border-radius: 20px;
+    background-color: #e83e8c;
+    padding: 0;
+    width: 80px;
+}

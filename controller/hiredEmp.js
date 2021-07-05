@@ -219,7 +219,8 @@ module.exports.tableHandler = async(req, res, next) => {
         res.render("tableHandler.ejs" , 
         {
             path:'tableHandler' ,
-            title:'Table List' ,
+            title:'tables' ,
+            isAuth : req.user
         })
     }
     catch(err)
