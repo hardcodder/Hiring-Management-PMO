@@ -120,6 +120,10 @@ module.exports.postLogin = async (req , res , next) => {
                     {
                         res.redirect('/getApprovedRequests') ;
                     }
+                    else if(user.team == "ops")
+                    {
+                        res.redirect('/tables') ;
+                    }
                     else
                     {
                         res.redirect('/getApprovedFinanceRequests') ;
@@ -184,8 +188,9 @@ module.exports.postUserType = async (req, res) =>
 
     if(user) {
         user.type = type;
+        user.team = type ;
         await user.save();
     }
 
-    return res.redirect('/');
+    return res.redirect('/login');
 }

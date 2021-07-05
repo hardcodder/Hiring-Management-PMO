@@ -11,21 +11,21 @@
     <%- include('./includes/nav.ejs') %>
     
 
-    <div class = " shadow p-3 mb-4 bg-white">
+    <div class = "shadow p-3 mb-4 bg-white">
         <div class="alert alert-info" style="text-align: center;" role="alert">
             <h6>You can see the request based on teams</h6>
           </div> 
         <div class="d-flex justify-content-around btns">
-            <a href="http://localhost:5000/getApprovedRequests?team=APPLICATION" class="btn btn-warning" style="color: black;">
+            <a href="http://localhost:5000/getApprovedRequests?team=APPLICATION" class="btn">
                 APPLICATION :- <b><%=application%></b>
             </a>
-            <a href="http://localhost:5000/getApprovedRequests?team=INFRA" class="btn btn-info" style="color: white;">
+            <a href="http://localhost:5000/getApprovedRequests?team=INFRA" class="btn">
                 INFRA :- <b><%=infra%></b>
             </a>
-            <a href="http://localhost:5000/getApprovedRequests?team=PRODUCT" class="btn btn-danger" style="color: white;">
+            <a href="http://localhost:5000/getApprovedRequests?team=PRODUCT" class="btn">
                 PRODUCT :- <b><%=product%></b>
             </a>
-            <a href="http://localhost:5000/getApprovedRequests?team=TEAM4" class="btn btn-success" style="color: white;">
+            <a href="http://localhost:5000/getApprovedRequests?team=TEAM4" class="btn">
                 TEAM4 :- <b><%=team4%></b>
             </a>
         </div>

@@ -218,7 +218,7 @@ module.exports.tableHandler = async(req, res, next) => {
     try{
         res.render("tableHandler.ejs" , 
         {
-            path:'tableHandler' ,
+            path:'tables' ,
             title:'tables' ,
             isAuth : req.user
         })
@@ -238,9 +238,10 @@ module.exports.getAllRequest = async(req, res, next) => {
 
         res.render("get_req.ejs" , 
         {
-            path:'get_req' ,
+            path:'all_requests' ,
             title:'All Requests' ,
             request: request,
+            isAuth : req.user
         })
     }
     catch(err)
@@ -264,7 +265,7 @@ module.exports.postAllRequest = async(req, res, next) => {
         }
 
         let mrequest = []
-        if(req.body.position != 'Position') {
+        if(req.body.position != 'All Positions') {
             for(value of request) {
                 // console.log(value.requestBody.position, req.body.position);
                 if(value.requestBody.position === req.body.position) {
@@ -281,6 +282,7 @@ module.exports.postAllRequest = async(req, res, next) => {
             path:'get_req' ,
             title:'All Requests' ,
             request: mrequest,
+            isAuth : req.user
         })
     }
     catch(err)

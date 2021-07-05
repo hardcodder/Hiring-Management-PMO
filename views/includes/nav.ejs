@@ -32,6 +32,14 @@
           <a class="nav-link" id="<%=path === 'tables' ? 'selected':''%>" href="/tables">Tables<span class="sr-only">(current)</span></a>
         </li>
         <%}%>
+        <%if(isAuth && (isAuth.team == "ops")){%>
+          <li class="nav-item active">
+            <a class="nav-link" id="<%=path === 'tables' ? 'selected':''%>" href="/tables">Tables<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" id="<%=path === 'all_requests' ? 'selected':''%>" href="/reqTable">All requests<span class="sr-only">(current)</span></a>
+          </li>
+        <%}%>
         <%if(isAuth && (isAuth.team == "finance")){%>
         <li class="nav-item active">
           <a class="nav-link" id="<%=path === 'to_be_approved_finance_requests' ? 'selected':''%>" href="/getToBeApprovedFinanceRequests">To Be Approved Finance Requests<span class="sr-only">(current)</span></a>

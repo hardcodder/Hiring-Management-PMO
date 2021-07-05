@@ -21,4 +21,15 @@
 .btns .btn
 {
     opacity: 83%;
+    border: 2px #e83e8c solid;
+    color: #e83e8c;
+    border-radius: 20px;
+}
+
+.btns .btn:hover
+{
+    border: 2px #e83e8c solid;
+    color: white;
+    border-radius: 20px;
+    background-color: #e83e8c;
 }
