@@ -1,12 +1,14 @@
-<nav class="sticky-top mx-0 navbar navbar-expand-lg navbar-light bg-light">
-    <a href="/" class="navbar-brand" id = "<%=path==='index'?'selected':''%>" >HOME</a>
+<nav style="background-color: rgba(255,164,0, 0.04999999701976776);;" class="sticky-top mx-0 navbar navbar-expand-lg navbar-light ">
+  <a class="navbar-brand" href="#">
+    <img src="icon/logo.jpeg" width="35" height="35" alt="">
+  </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <%if(isAuth){%>
+        <%if(isAuth && (isAuth.team == "hiring")){%>
         <li class="nav-item active">
           <a class="nav-link" id="<%=path === 'generated_requests' ? 'selected':''%>" href="/getGeneratedRequests">Generated Requests<span class="sr-only">(current)</span></a>
         </li>
@@ -16,17 +18,18 @@
         </li>
 
         <li class="nav-item active">
-          <a class="nav-link" id="<%=path === 'approved_requests' ? 'selected':''%>" href="/getApprovedRequests">Approved Requests<span class="sr-only">(current)</span></a>
-        </li>
-
-        <li class="nav-item active">
           <a class="nav-link" id="<%=path === 'to_be_approved_requests' ? 'selected':''%>" href="/getToBeApprovedRequests">To Be Approved Requests<span class="sr-only">(current)</span></a>
         </li>
-
+        <%}%>
+        <%if(isAuth && (isAuth.team == "ta")){%>
+        <li class="nav-item active">
+          <a class="nav-link" id="<%=path === 'approved_requests' ? 'selected':''%>" href="/getApprovedRequests">Approved Requests<span class="sr-only">(current)</span></a>
+        </li>
         <li class="nav-item active">
           <a class="nav-link" id="<%=path === 'generated_finance_requests' ? 'selected':''%>" href="/getGeneratedFinanceRequests">Generated Finance Requests<span class="sr-only">(current)</span></a>
         </li>
-
+        <%}%>
+        <%if(isAuth && (isAuth.team == "finance")){%>
         <li class="nav-item active">
           <a class="nav-link" id="<%=path === 'to_be_approved_finance_requests' ? 'selected':''%>" href="/getToBeApprovedFinanceRequests">To Be Approved Finance Requests<span class="sr-only">(current)</span></a>
         </li>

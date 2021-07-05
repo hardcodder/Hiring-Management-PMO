@@ -1,11 +1,14 @@
 .generated_requests
 {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 500;
+    color: rgb(19, 16, 16);
 }
 
 .generated_requests:hover
 {
-    color: tomato;
+    color: #e83e8c;
     transition:all 400ms;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }

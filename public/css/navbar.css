@@ -1,6 +1,8 @@
 .navbar
 {
-    font-family: 'Viga', sans-serif;
+    /* font-family: 'Viga', sans-serif; */
+    font-family: 'Source Sans Pro', sans-serif;
+    /* font-weight: 600; */
     font-size: 1.1rem;
 }
 
@@ -8,11 +10,12 @@
 {
     font-size: 1.2rem;
     transition: all 200ms;
-    color: tomato;
+    color: #e83e8c;
 }
 
 #selected
 {
     font-size: 1.2rem;
-    color: red;
+    font-weight: 600;
+    color: #B27300;
 }

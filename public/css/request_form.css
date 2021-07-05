@@ -5,9 +5,11 @@ body
 
 .request_form
 {
-    font-family: 'Viga', sans-serif;
+    /* font-family: 'Viga', sans-serif; */
+    /* font-family: 'Open Sans', sans-serif; */
+    font-family: 'Source Sans Pro', sans-serif;
     font-size: 1.3rem;
-    background-color: rgb(196, 197, 151);
+    background-color: #b274004d;;
     border-radius: 10px; 
 }
 
