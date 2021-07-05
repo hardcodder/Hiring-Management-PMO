@@ -105,6 +105,7 @@ module.exports.getUnallocatedHiredEmp = async (req, res) => {
             path:'get_hiredEmp' ,
             title:'Hired Employees' ,
             hiredEmp: hiredEmp,
+            isAuth : req.user
         })
     }
     catch(err)
@@ -132,6 +133,7 @@ module.exports.getFilteredUnallocatedHiredEmp = async (req, res) => {
             path:'get_hiredEmp' ,
             title:'Hired Employees' ,
             hiredEmp: hiredEmp,
+            isAuth : req.user
         })
     }
     catch(err)
@@ -153,6 +155,7 @@ module.exports.getHiredEmp = async (req, res) => {
             path:'get_emp' ,
             title:'Hired Employees' ,
             emp: emp,
+            isAuth : req.user
         })
     }
     catch(err)
@@ -180,6 +183,7 @@ module.exports.getFilteredHiredEmp = async (req, res) => {
             path:'get_emp' ,
             title:'Hired Employees' ,
             emp: emp,
+            isAuth : req.user
         })
     }
     catch(err)

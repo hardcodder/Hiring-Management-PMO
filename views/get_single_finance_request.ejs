@@ -4,11 +4,15 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://kit.fontawesome.com/0cfa224e02.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="css/single_request.css">
 
-<body>
-    <div class="d-flex justify-content-center">
+<body style="background-color: wheat;">
 
-    <li style="list-style-type: none; font-family: 'Viga', sans-serif;color:black" class = "alert alert-success shadow p-3 mb-5 bg-white rounded col col-xl-8 col-lg-10 col-md-10 col-sm-10 col-10 mx-3">
+    <%- include('./includes/nav.ejs') %>
+
+    <div class="d-flex justify-content-center m-3">
+
+    <li style="list-style-type: none; font-family: 'Viga', sans-serif;color:black ; " class = "alert alert-success shadow p-3 mb-5 bg-white col col-xl-8 col-lg-10 col-md-10 col-sm-10 col-10 mx-3 single_req">
         <h4 style="text-align: center; ">Request</h4>
         <hr>
         <div class="d-flex justify-content-between">
@@ -90,7 +94,7 @@
 
         <%}%> -->
         <br>
-        <a type="button" href="http://localhost:5000/getSingleOriginalRequest?requestId=<%=request._id%>" class="btn btn-info ">
+        <a type="button" href="http://localhost:5000/getSingleOriginalRequest?requestId=<%=request.requestBody.referencingRequestId%>" class="btn btn-info ">
             See Original Request
         </a>
         <a href="http://localhost:5000/getComments?requestId=<%=request._id%>" type="button" class="btn btn-info" style="float: right;">
@@ -121,7 +125,7 @@
             </form>
         <%}%>
 
-        <%if(finance){%>
+        <%if(finance && !approver){%>
             <a type="button" href="http://localhost:5000/getBudgetCodeForm?requestId=<%=request._id%>" class="btn btn-success ">
                 Create Budget Code
             </a>

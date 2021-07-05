@@ -98,6 +98,8 @@ module.exports.createOpening = async (req , res , next) => {
         if(budgetCode === '' || budgetCode === null || budgetCode === undefined)
         {
             let request = await Request.findById(ObjectId(requestId)) ;
+            console.log("HELLO1") ;
+            console.log(request) ;
             let position = request.requestBody.position ;
             let availableCode = await BudgetCode.findOne({position : position.toString(), status: 'Unassigned'}) ;
 
@@ -127,6 +129,7 @@ module.exports.createOpening = async (req , res , next) => {
             }
             else
             {
+
                 let opening = new Opening({
                     requestId : ObjectId(requestId),
                     budgetCode : '$',
@@ -147,13 +150,14 @@ module.exports.createOpening = async (req , res , next) => {
         }
         else
         {
+
             let request = await Request.findById(ObjectId(requestId)) ;
             let opening = new Opening({
                 requestId : ObjectId(requestId),
                 budgetCode : budgetCode,
                 team: request.requestBody.team,
                 priority: request.requestBody.priority,
-                position: position,
+                position: request.requestBody.position ,
                 status : 'OPENED'
             })
     
@@ -165,7 +169,14 @@ module.exports.createOpening = async (req , res , next) => {
         }
         
 
-        res.send("opening created");
+        res.render("message_page.ejs" , 
+        {
+            path:'message_page' ,
+            title:'Message' ,
+            message : "Opening has been successfully created" ,
+            messageType:"success" ,
+            isAuth : req.user
+        })
     }
     catch (err) {
         console.log(err) ;
@@ -185,6 +196,7 @@ module.exports.getOpenings = async (req, res, next) => {
             path:'getOpenings' ,
             title:'Openings' ,
             openings: openings,
+            isAuth : req.user
         })
     }
     catch(err)
@@ -203,8 +215,10 @@ module.exports.postOpenings = async (req, res, next) => {
 
         let request = await Request.findById(requestId) ;
         request.acknowledged = true ;
-
+        request.state = "RESOLVED" ;
         await request.save() ;
+
+        console.log(request) ;
 
         console.log(req.body);
         let code = new BudgetCode({
@@ -232,7 +246,14 @@ module.exports.postOpenings = async (req, res, next) => {
 
         }
 
-        res.send('success');
+        res.render("message_page.ejs" , 
+        {
+            path:'message_page' ,
+            title:'Message' ,
+            message : "Budget Code has been successfully assigned ." ,
+            messageType:"success" ,
+            isAuth : req.user
+        })
     }
     catch(err)
     {

@@ -1,0 +1,18 @@
+.navbar
+{
+    font-family: 'Viga', sans-serif;
+    font-size: 1.1rem;
+}
+
+.navbar div .navbar-nav .nav-item .nav-link:hover
+{
+    font-size: 1.2rem;
+    transition: all 200ms;
+    color: tomato;
+}
+
+#selected
+{
+    font-size: 1.2rem;
+    color: red;
+}

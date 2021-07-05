@@ -61,6 +61,7 @@ module.exports.getLogin = async (req , res , next) => {
         {
             path:'login' ,
             title:'Login' ,
+            isAuth : req.user
         })
     }
     catch(err)
@@ -79,6 +80,7 @@ module.exports.getSignup = async (req , res , next) => {
         {
             path:'signup' ,
             title:'Signup' ,
+            isAuth : req.user
         })
     }
     catch(err)
@@ -169,6 +171,7 @@ module.exports.getUserType = (req, res) => {
         {
             path:'user_type' ,
             title:'UserType' ,
+            isAuth : req.user
         });
 }
 

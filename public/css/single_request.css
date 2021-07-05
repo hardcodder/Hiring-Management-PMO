@@ -1,0 +1,11 @@
+.single_req
+{
+    border-radius: 15px;
+}
+
+.single_req div:hover
+{
+    transition: all 200ms;
+    color: tomato;
+    text-shadow: 6px 2px 7px rgba(81,206,205,0.49);
+}

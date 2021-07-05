@@ -155,6 +155,10 @@ module.exports.getGeneratedRequests = async (req , res , next) =>
         let approved = await Request.countDocuments({generatedBy : email , finance:false , state:"APPROVED"}) ;
 
         let unapproved = await Request.countDocuments({generatedBy : email , finance:false , state:"OPEN"}) ;
+        
+        let cancelled = await Request.countDocuments({generatedBy : email , finance:false , state:"CANCELLED"}) ;
+
+        let resolved = await Request.countDocuments({generatedBy : email , finance:false , state:"RESOLVED"}) ;
 
         let requests ;
 
@@ -163,20 +167,9 @@ module.exports.getGeneratedRequests = async (req , res , next) =>
             requests = await Request.find({generatedBy : email , finance:false}) ;
             
         }
-        else if(req.query.state == 'approved')
-        {
-
-            requests = await Request.find({generatedBy : email , finance:false , state:"APPROVED"}) ;
-             
-        }
-        else if(req.query.state == 'open')
-        {
-            requests = await Request.find({generatedBy : email , finance:false , state:"OPEN"}) ;
-             
-        }
         else
         {
-            requests = await Request.find({generatedBy : email , finance:false}) ;  
+            requests = await Request.find({generatedBy : email , finance:false , state:req.query.state}) ;   
         }
         res.render("get_generated_requests.ejs" , 
             {
@@ -184,7 +177,10 @@ module.exports.getGeneratedRequests = async (req , res , next) =>
                 title:'Generated Requests' ,
                 requests: requests ,
                 approved : approved , 
-                unapproved : unapproved 
+                unapproved : unapproved ,
+                cancelled : cancelled ,
+                resolved : resolved ,
+                isAuth : req.user
             })
     }
     catch(err)
@@ -206,23 +202,19 @@ module.exports.getGeneratedFinanceRequests = async (req , res , next) =>
 
         let unapproved = await Request.countDocuments({generatedBy : email , finance:true , state:"OPEN"}) ;
 
+        let cancelled = await Request.countDocuments({generatedBy : email , finance:true , state:"CANCELLED"}) ;
+
+        let resolved = await Request.countDocuments({generatedBy : email , finance:true , state:"RESOLVED"}) ;
+
         let requests ;
 
         if(req.query.state == null || req.query.state == '' || req.query.state == undefined)
         {
             requests = await Request.find({generatedBy : email , finance:true}) ;
         }
-        else if(req.query.state == 'approved')
-        {
-            requests = await Request.find({generatedBy : email , finance:true , state:"APPROVED"}) ;   
-        }
-        else if(req.query.state == 'open')
-        {
-            requests = await Request.find({generatedBy : email , finance:true , state:"OPEN"}) ;
-        }
         else
         {
-            requests = await Request.find({generatedBy : email , finance:true}) ;  
+            requests = await Request.find({generatedBy : email , finance:true , state : req.query.state}) ;  
         }
         res.render("get_genereated_finance_requests.ejs" , 
         {
@@ -230,7 +222,10 @@ module.exports.getGeneratedFinanceRequests = async (req , res , next) =>
             title:'Generated Finance Requests' ,
             requests: requests ,
             approved : approved , 
-            unapproved : unapproved 
+            unapproved : unapproved ,
+            cancelled : cancelled ,
+            resolved : resolved ,
+            isAuth : req.user
         })
     }
     catch(err)
@@ -252,6 +247,7 @@ module.exports.getToBeApprovedRequests = async (req , res , next) => {
             path:'to_be_approved_requests' ,
             title:'To Be Approved Requests' ,
             requests: requests ,
+            isAuth : req.user
         })
     }
     catch(err)
@@ -271,6 +267,7 @@ module.exports.getToBeApprovedFinanceRequests = async (req , res , next) => {
             path:'to_be_approved_finance_requests' ,
             title:'To Be Approved Finance Requests' ,
             requests: requests ,
+            isAuth : req.user
         })
     }
     catch(err)
@@ -299,7 +296,8 @@ module.exports.getSingleRequest = async (req , res , next) => {
                     generator: request.generatedBy == req.user.email ,
                     approver : request.toBeApprovedBy == req.user.email ,
                     ta : req.user.team == "ta" ,
-                    acknowledged : request.acknowledged
+                    acknowledged : request.acknowledged ,
+                    isAuth : req.user
                 })
             }
             else
@@ -340,7 +338,8 @@ module.exports.getSingleFinanceRequest = async (req , res , next) => {
                     request: request ,
                     generator: request.generatedBy == req.user.email ,
                     approver : request.toBeApprovedBy == req.user.email ,
-                    finance : req.user.team == "finance"
+                    finance : req.user.team == "finance" ,
+                    isAuth : req.user
                 })
             }
             else
@@ -377,6 +376,7 @@ module.exports.getSingleOriginalRequest = async (req , res , next) => {
                 path:'single_original_request' ,
                 title:'Single Original Request' ,
                 request: request ,
+                isAuth : req.user
             })
         }
         else
@@ -516,9 +516,6 @@ module.exports.approveRequest = async (req , res , next) => {
                 {
                     res.redirect('/getToBeApprovedFinanceRequests') ;
                 }
-                res.json({
-                    message : "approved"
-                })
             }
             else
             {
@@ -587,10 +584,8 @@ module.exports.modifyRequest = async (req , res , next) => {
                 }
 
                 await request.save() ;
-                
-                res.json({
-                    message:"Modified"
-                })
+
+                res.redirect(`/getSingleRequest?requestId=${request._id}`) ;
             }
             else
             {
@@ -654,7 +649,8 @@ module.exports.getApprovedRequests = async (req , res , next) => {
                 application : application ,
                 infra:infra ,
                 product : product ,
-                team4:team4
+                team4:team4 ,
+                isAuth : req.user
             })
         }
         else
@@ -693,7 +689,8 @@ module.exports.getApprovedRequests = async (req , res , next) => {
                 application : application ,
                 infra:infra ,
                 product : product ,
-                team4:team4
+                team4:team4 ,
+                isAuth : req.user
             })
         }
         
@@ -715,6 +712,7 @@ module.exports.getApprovedFinanceRequests = async (req , res , next) => {
             path:'approved_finance_requests' ,
             title:'Approved Finance Requests' ,
             requests: requests ,
+            isAuth : req.user
         })
     }
     catch(err)
@@ -732,6 +730,7 @@ module.exports.getRequestForm = async(req , res , next) => {
         {
             path:'request_form' ,
             title:'Request Form' ,
+            isAuth : req.user
         })
     }
     catch(err)
@@ -752,7 +751,8 @@ module.exports.getBudgetCodeForm = async(req , res , next) => {
                 {
                     path:'get_budget_code_form' ,
                     title:'Budget Code request Form' ,
-                    request:request
+                    request:request ,
+                    isAuth : req.user
                 })
         }
         else
@@ -776,7 +776,8 @@ module.exports.getFinanceRequestForm = async(req , res , next) => {
                 {
                     path:'finance_request_form' ,
                     title:'Finance request Form' ,
-                    request:request
+                    request:request ,
+                    isAuth : req.user
                 })
             }
             else
@@ -834,7 +835,8 @@ module.exports.getModifyForm = async(req , res , next) => {
                 {
                     path:'modify_form' ,
                     title:'Modify Form' ,
-                    request:request
+                    request:request ,
+                    isAuth : req.user
                 })
             }
             else
@@ -875,7 +877,8 @@ module.exports.getComments = async(req , res , next) => {
                 {
                     path:'get_comments' ,
                     title:'Comments' ,
-                    request:request
+                    request:request ,
+                    isAuth : req.user
                 })
             }
             else
@@ -936,6 +939,7 @@ module.exports.getAllApprovedRequests = async (req , res , next) =>
             path:'allApproved_requests' ,
             title:'Approved Requests' ,
             requests: requests ,
+            isAuth : req.user
         })
     }
     catch(err)
@@ -962,6 +966,7 @@ module.exports.getSingleApprovedRequest = async (req , res , next) => {
                     path:'single_approved_request' ,
                     title:'Single Approved Request' ,
                     request: request ,
+                    isAuth : req.user
                 })
             }
             else

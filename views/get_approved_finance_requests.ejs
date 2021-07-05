@@ -1,17 +1,20 @@
 
 <%- include('./includes/head.ejs') %>
 <link rel="stylesheet" type="text/css" href="css/register.css">
+<link rel="stylesheet" type="text/css" href="css/generated_requests.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://kit.fontawesome.com/0cfa224e02.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
 <body style="background-color: wheat;">
 
+    <%- include('./includes/nav.ejs') %>
+
     <div class="d-flex justify-content-center">
         
-        <ul class="d-flex row justify-content-center p-xl-3 p-lg-3 p-md-2 p-1 persons-ul">
+        <ul class="d-flex row justify-content-center p-xl-3 p-lg-3 p-md-2 p-1 col-12">
             <%requests.forEach(request => {%>
-                <a href="http://localhost:5000/getSingleFinanceRequest?requestId=<%=request._id%>" style="list-style-type: none; font-family: 'Viga', sans-serif;text-decoration: none;" class = "alert alert-success shadow p-3 mb-5 bg-white rounded col col-xl-10 col-lg-10 col-md-10 col-sm-10 col-10 mx-3">
+                <a href="http://localhost:5000/getSingleFinanceRequest?requestId=<%=request._id%>" style="list-style-type: none; font-family: 'Viga', sans-serif;text-decoration: none;border-radius: 10px;" class = "alert alert-success p-3 mb-5 bg-white col col-xl-5 col-lg-7 col-md-9 col-sm-10 col-10 mx-3 generated_requests">
         
                     <div class="d-flex justify-content-between">
                         <h4>Status</h4>

@@ -3,52 +3,85 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://kit.fontawesome.com/0cfa224e02.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/request_form.css">
+    <body style="background-color: wheat;">
+        <%- include('./includes/nav.ejs') %>
 
-    <body>
-
-<div class="con d-flex container-fluid justify-content-around row pt-5">
-    <form class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-12 shadow mt-5" action="/modifyRequest" method="post">
+<div class="con d-flex container-fluid justify-content-around row " >
+    <form  class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-12 shadow mt-5 py-5 request_form" action="/modifyRequest" method="post">
         <div style="text-align: center;">
-            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" name="toBeApprovedBy" placeholder="Enter Your Approver Email" value="<%=request.toBeApprovedBy%>">
+            <label for="toBeApprovedBy"><b>Approver Email</b></label><br>
+            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" id="toBeApprovedBy" name="toBeApprovedBy" placeholder="Enter Your Approver Email" value="<%=request.toBeApprovedBy%>" title = "Email of the higher authority who will approve this request">
         </div>
         <div style="text-align: center;">
-            <label for="exampleFormControlSelect1">Select Type</label>
-            <select style="width: 80%; border-radius:20px;opacity: 0.8;margin: 0 auto;" class="form-control type" id="exampleFormControlSelect1" name="type" value="<%=request.requestBody.type%>">
+            <label for="exampleFormControlSelect1"><b>Select Type</b></label>
+            <select style="width: 80%; border-radius:20px;opacity: 0.8;margin: 0 auto;" class="form-control type" id="exampleFormControlSelect1" name="type" title="Select the type of request you want to create">
               <option>New</option>
               <option>Replacement</option>
             </select>
         </div>
         <div style="text-align: center;">
-            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" name="reportingManager" placeholder="Enter Reporting Manager Email" value="<%=request.requestBody.reportingManager%>">
+            <label for="reportingManager"><b>Reporting Manager Email</b></label><br>
+            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" id="reportingManager" name="reportingManager" placeholder="Enter Reporting Manager Email" value="<%=request.requestBody.reportingManager%>">
         </div>
         <div style="text-align: center;">
-            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2 _new" type="text" name="prior"  placeholder="Enter the priority" value="<%=request.requestBody.priority%>">
+            <label for="priority" class="_new"><b>Priority</b></label><br class="_new">
+            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2 _new" type="text" name="prior" id="priority" placeholder="Enter the priority" value="<%=request.requestBody.priority%>" title = "1 represents highest priority and 5 represents lowest priority">
         </div>
         <div style="text-align: center;">
-            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" name="team" placeholder="Enter the team name" value="<%=request.requestBody.team%>">
-        </div>
-        <div style="text-align: center;">
-            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" name="position" placeholder="Enter the position" value="<%=request.requestBody.position%>">
-        </div>
-        <div style="text-align: center;">
-            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2 _replace" type="text" name="personReplacing" placeholder="Name of person to be replaced" value="<%=request.requestBody.personReplacing%>">
-        </div>
-        <div style="text-align: center;">
-            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2 _replace" type="text" name="budgetCode"  placeholder="Budget Code" value="<%=request.requestBody.budgetCode%>">
+            <label for="team"><b>Team Name</b></label><br>
+            <select style="width: 80%; border-radius:20px;opacity: 0.8;margin: 0 auto;" class="form-control type" id="team" type="text" name="team">
+                <option>INFRA</option>
+                <option>PRODUCT</option>
+                <option>APPLICATION</option>
+                <option>TEAM4</option>
+            </select>
         </div>
         <!-- <div style="text-align: center;">
-            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2 _new" type="number" name="numPersons"  placeholder="Number of persons to be hired" value="<%=request.requestBody.numPersons%>">
+            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" name="position" placeholder="Enter the position" value="">
         </div> -->
         <div style="text-align: center;">
-            <textarea style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" name="BusinessCase" placeholder="Enter the business case" value="<%=request.requestBody.businessCase%>"><%=request.requestBody.businessCase%></textarea>
+            <label for="position"><b>Select Position</b></label>
+            <select style="width: 80%; border-radius:20px;opacity: 0.8;margin: 0 auto;" class="form-control type" id="position" name="position">
+              <option>SDE 1 BE</option>
+              <option>SDE 1 FE</option>
+              <option>SDE 2 BE</option>
+              <option>SDE 2 FE</option>
+              <option>SDE 3</option>
+              <option>EM</option>
+              <option>Director</option>
+              <option>Sr. Director</option>
+              <option>QA 1</option>
+              <option>QA 2</option>
+              <option>QA 3</option>
+              <option>Data Analyst 1</option>
+              <option>Data Analyst 2</option>
+              <option>Data Scientist 1</option>
+              <option>Data Scientist 2</option>
+            </select>
         </div>
         <div style="text-align: center;">
-            <textarea style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" name="comment" placeholder="Enter the message for approver" value=""></textarea>
+            <label for="personReplacing" class="_replace"><b>Person Replacing</b></label><br class="_replace">
+            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2 _replace" type="text" id="personReplacing" name="personReplacing" placeholder="Name of person to be replaced" value="<%=request.requestBody.personReplacing%>">
+        </div>
+        <div style="text-align: center;">
+            <label for="budgetCode" class="_replace"><b>Budget Code</b></label><br class="_replace">
+            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2 _replace" type="text" id="budgetCode" name="budgetCode"  placeholder="Budget Code" value="<%=request.requestBody.budgetCode%>">
+        </div>
+        <div style="text-align: center;">
+            <input style="width: 80%; border-radius:20px;opacity: 0.8;" type="hidden" name="requestId" value="<%=request._id%>">
+        </div>
+        <div style="text-align: center;">
+            <label for="BusinessCase"><b>Business Case</b></label><br>
+            <textarea style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" id="BusinessCase" name="BusinessCase" placeholder="Enter the business case" value=""><%=request.requestBody.businessCase%></textarea>
+        </div>
+        
+        <div style="text-align: center;">
+            <label for="comment"><b>Message for Approver</b></label><br>
+            <textarea style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" id="comment" name="comment" placeholder="Enter the message for approver" value="" title="Optional message for approver if you want to write something"></textarea>
         </div>
 
-        <div style="text-align: center;">
-            <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2 _new" type="hidden" name="requestId" value="<%=request._id%>">
-        </div>
+        
 
         <div style="text-align: center;">
             <input style="width: 50%;border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="submit" placeholder = "Sign in">

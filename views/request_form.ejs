@@ -3,11 +3,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://kit.fontawesome.com/0cfa224e02.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
+    <link rel="stylesheet" type="text/css" href="css/request_form.css">
     <body style="background-color: wheat;">
+        <%- include('./includes/nav.ejs') %>
 
-<div class="con d-flex container-fluid justify-content-around row pt-5" >
-    <form class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-12 shadow mt-5" action="/generateRequest" method="post">
+<div class="con d-flex container-fluid justify-content-around row " >
+    <form  class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-12 shadow mt-5 py-5 request_form" action="/generateRequest" method="post">
         <div style="text-align: center;">
             <label for="toBeApprovedBy"><b>Approver Email</b></label><br>
             <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" id="toBeApprovedBy" name="toBeApprovedBy" placeholder="Enter Your Approver Email" value="" title = "Email of the higher authority who will approve this request">
@@ -24,7 +25,7 @@
             <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2" type="text" id="reportingManager" name="reportingManager" placeholder="Enter Reporting Manager Email" value="">
         </div>
         <div style="text-align: center;">
-            <label for="priority" class="_new"><b>Priority</b></label><br>
+            <label for="priority" class="_new"><b>Priority</b></label><br class="_new">
             <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2 _new" type="text" name="prior" id="priority" placeholder="Enter the priority" value="" title = "1 represents highest priority and 5 represents lowest priority">
         </div>
         <div style="text-align: center;">
@@ -60,11 +61,11 @@
             </select>
         </div>
         <div style="text-align: center;">
-            <label for="personReplacing" class="_replace"><b>Person Replacing</b></label><br>
+            <label for="personReplacing" class="_replace"><b>Person Replacing</b></label><br class="_replace">
             <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2 _replace" type="text" id="personReplacing" name="personReplacing" placeholder="Name of person to be replaced" value="">
         </div>
         <div style="text-align: center;">
-            <label for="budgetCode" class="_replace"><b>Budget Code</b></label><br>
+            <label for="budgetCode" class="_replace"><b>Budget Code</b></label><br class="_replace">
             <input style="width: 80%; border-radius:20px;opacity: 0.8;" class="name border p-3 mt-2 mb-2 _replace" type="text" id="budgetCode" name="budgetCode"  placeholder="Budget Code" value="">
         </div>
         <!-- <div style="text-align: center;">

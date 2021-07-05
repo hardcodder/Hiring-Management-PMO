@@ -1,26 +1,28 @@
 <%- include('./includes/head.ejs') %>
 <link rel="stylesheet" type="text/css" href="css/register.css">
-<link rel="stylesheet" type="text/css" href="css/login.css">
+<link rel="stylesheet" type="text/css" href="css/request_form.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://kit.fontawesome.com/0cfa224e02.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
    
 
-<body>
+<body style="background-color: wheat;">
+    <%- include('./includes/nav.ejs') %>
 
     <div class="con d-flex container-fluid justify-content-around row pt-5">
-            <form class="login col-xl-4 col-lg-5 col-md-6 col-sm-8 col-12 shadow mt-5" action="signup" method="POST">
-
+        
+        <form class="login col-xl-4 col-lg-5 col-md-6 col-sm-8 col-12 shadow mt-5 request_form" action="signup" method="POST">
+            <br>
                 <div style="text-align: center;">
                     <i class="fas fa-envelope-open-text fa-2x icon"></i>
                     <input style="width: 80%; border-radius:20px;opacity: 0.8;font-family: 'Viga', sans-serif;" class="name border p-3 mt-2 mb-2" type="email" name="email" placeholder="Enter Your Email" required>
                 </div>
                 <div style="text-align: center;">
-                    <i class="fas fa-envelope-open-text fa-2x icon"></i>
+                    <i class="fas fa-file-signature fa-2x icon"></i>
                     <input style="width: 80%; border-radius:20px;opacity: 0.8;font-family: 'Viga', sans-serif;" class="name border p-3 mt-2 mb-2" type="text" name="name" placeholder="Enter Your Name" required>
                 </div>
                 <div style="text-align: center;">
-                    <i class="fas fa-envelope-open-text fa-2x icon"></i>
+                    <i class="fas fa-users fa-2x icon"></i>
                     <input style="width: 80%; border-radius:20px;opacity: 0.8;font-family: 'Viga', sans-serif;" class="name border p-3 mt-2 mb-2" type="text" name="team" placeholder="Enter Your Team" required>
                 </div>
                  <div style="text-align: center;">

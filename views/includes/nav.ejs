@@ -6,44 +6,55 @@
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        
+        <%if(isAuth){%>
         <li class="nav-item active">
-          <a class="nav-link" id="<%=path === 'get-covid' ? 'selected':''%>" href="/get-covid">COVID SECTION<span class="sr-only">(current)</span></a>
+          <a class="nav-link" id="<%=path === 'generated_requests' ? 'selected':''%>" href="/getGeneratedRequests">Generated Requests<span class="sr-only">(current)</span></a>
         </li>
 
         <li class="nav-item active">
-          <a class="nav-link" id="<%=path === 'get-quarantine-info' ? 'selected':''%>" href="/quarantine-info">GET QURANTINE INFO <span class="sr-only">(current)</span></a>
+          <a class="nav-link" id="<%=path === 'request_form' ? 'selected':''%>" href="/getRequestForm">Request Form<span class="sr-only">(current)</span></a>
         </li>
-        <%if(isAuth && isAuth.isAdmin){%>
+
         <li class="nav-item active">
-            <a class="nav-link" id="<%=path === 'add-quarantine-info' ? 'selected':''%>" href="/add-quarantine-info">ADD QURANTINE INFO <span class="sr-only">(current)</span></a>
+          <a class="nav-link" id="<%=path === 'approved_requests' ? 'selected':''%>" href="/getApprovedRequests">Approved Requests<span class="sr-only">(current)</span></a>
         </li>
+
         <li class="nav-item active">
-          <a class="nav-link" id="<%=path === 'get-reported-info' ? 'selected':''%>" href="/get-reported-info">GET REPORTED INFO <span class="sr-only">(current)</span></a>
-      </li>
+          <a class="nav-link" id="<%=path === 'to_be_approved_requests' ? 'selected':''%>" href="/getToBeApprovedRequests">To Be Approved Requests<span class="sr-only">(current)</span></a>
+        </li>
+
+        <li class="nav-item active">
+          <a class="nav-link" id="<%=path === 'generated_finance_requests' ? 'selected':''%>" href="/getGeneratedFinanceRequests">Generated Finance Requests<span class="sr-only">(current)</span></a>
+        </li>
+
+        <li class="nav-item active">
+          <a class="nav-link" id="<%=path === 'to_be_approved_finance_requests' ? 'selected':''%>" href="/getToBeApprovedFinanceRequests">To Be Approved Finance Requests<span class="sr-only">(current)</span></a>
+        </li>
+
+        <li class="nav-item active">
+          <a class="nav-link" id="<%=path === 'approved_finance_requests' ? 'selected':''%>" href="/getApprovedFinanceRequests">Approved Finance Requests<span class="sr-only">(current)</span></a>
+        </li>
         <%}%>
-        <%if(isAuth && isAuth.isAdmin && isAuth.isMainAdmin){%>
-          <li class="nav-item active">
-              <a class="nav-link" id="<%=path === 'manage-users' ? 'selected':''%>" href="/manage-users">MANAGE USERS <span class="sr-only">(current)</span></a>
-          </li>
-          <%}%>
       </ul>
    
       <ul class = "navbar-nav">
+        <ul class = "navbar-nav">
         
-        <%if(!isAuth){%>
-        <li class="nav-item active">
-          <a class="nav-link" id="<%=path === 'login' ? 'selected':''%>" href="/login">LOG IN<span class="sr-only">(current)</span></a>
-        </li>
+          <%if(!isAuth){%>
+          <li class="nav-item active">
+            <a class="nav-link" id="<%=path === 'login' ? 'selected':''%>" href="/login">Log In<span class="sr-only">(current)</span></a>
+          </li>
+  
+          <li class="nav-item active">
+              <a class="nav-link" id="<%= path === 'signup' ? 'selected' : ''%>" href="/signup">Sign Up<span class="sr-only">(current)</span></a>
+          </li>
+          <%}else{%>
+          <li class="nav-item active">
+            <a class="nav-link" id="" href="/logout">Log Out<span class="sr-only">(current)</span></a>
+          </li>
+          <%}%>
+        </ul>
 
-        <li class="nav-item active">
-            <a class="nav-link" id="<%= path === 'signup' ? 'selected' : ''%>" href="/signup">SIGN UP<span class="sr-only">(current)</span></a>
-        </li>
-        <%}else{%>
-        <li class="nav-item active">
-          <a class="nav-link" id="" href="/logout">Log Out<span class="sr-only">(current)</span></a>
-        </li>
-        <%}%>
       </ul>
     </div>
   </nav>

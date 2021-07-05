@@ -10,6 +10,7 @@ module.exports.createBudgetCodeForm = async (req, res , next) => {
         {
             path:'budgetCode' ,
             title:'BudgetCode' ,
+            isAuth : req.user
         })
     }
     catch(err)
@@ -56,7 +57,8 @@ module.exports.getBudgetCodes = async (req, res , next) => {
             path:'get_allBudgetCode' ,
             title:'BudgetCodes' ,
             budgetCodes: budgetCodes,
-            count: count
+            count: count ,
+            isAuth : req.user
         })
     }
     catch(err)
@@ -90,7 +92,8 @@ module.exports.getFilteredBudgetCodes = async (req, res , next) => {
             path:'get_filteredBudgetCode' ,
             title:'BudgetCodes' ,
             budgetCodes: budgetCodes,
-            count: count 
+            count: count ,
+            isAuth : req.user
         })
     }
     catch(err)
@@ -121,7 +124,8 @@ module.exports.getAllocatedBudgetCodes = async (req, res , next) => {
             path:'get_allocatedBudgetCode' ,
             title:'FTE Allocated BudgetCodes' ,
             budgetCodes: budgetCodes,
-            count: count 
+            count: count ,
+            isAuth : req.user
         })
     }
     catch(err)
@@ -138,6 +142,7 @@ module.exports.getexcel = (req, res) => {
     {
         path:'excelupload' ,
         title:'Upload Excel Sheet' ,
+        isAuth : req.user
     });
 }
 

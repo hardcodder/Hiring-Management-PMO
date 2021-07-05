@@ -1,0 +1,22 @@
+body
+{
+    background-color: wheat;
+}
+
+.request_form
+{
+    font-family: 'Viga', sans-serif;
+    font-size: 1.3rem;
+    background-color: rgb(196, 197, 151);
+    border-radius: 10px; 
+}
+
+.request_form div label
+{
+    margin-top: 5px;
+}
+
+.request_form div select
+{
+    font-size: 1.1rem;
+}
