@@ -16,4 +16,7 @@ router.post('/assignBudgetCodeToEmp', empController.assignBudgetCodeToEmp);
 
 router.get('/tables' , empController.tableHandler) ;
 
+router.get('/reqTable' , empController.getAllRequest) ;
+router.post('/reqTable' , empController.postAllRequest) ;
+
 module.exports = router ;

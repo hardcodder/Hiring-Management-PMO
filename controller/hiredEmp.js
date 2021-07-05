@@ -227,4 +227,51 @@ module.exports.tableHandler = async(req, res, next) => {
     }
 }
 
+module.exports.getAllRequest = async(req, res, next) => {
+    try{
+        let request = await Request.find({finance: false});
+
+        res.render("get_req.ejs" , 
+        {
+            path:'get_req' ,
+            title:'All Requests' ,
+            request: request,
+        })
+    }
+    catch(err)
+    {
+        res.json({
+            message:"Please try again!" ,
+            type : "error"
+        }) ; 
+    }
+}
+
+
+module.exports.postAllRequest = async(req, res, next) => {
+    try{
+        let request = [];
+        if(req.body.position === 'Team Manager') {
+            request = await Request.find({finance: false});
+        }
+        else {
+            request = await Request.find({finance: true});
+        }
+
+        res.render("get_req.ejs" , 
+        {
+            path:'get_req' ,
+            title:'All Requests' ,
+            request: request,
+        })
+    }
+    catch(err)
+    {
+        res.json({
+            message:"Please try again!" ,
+            type : "error"
+        }) ; 
+    }
+}
+
 
