@@ -11,7 +11,7 @@
 
 
     <div style="text-align: center;">
-        <h1>FTE Allocated Budget Codes</h1>
+        <h1>FTE Allocated / Offered Budget Codes</h1>
     </div>
     <hr/>
     <form style="margin-left: 10px;" method="post">
@@ -51,8 +51,9 @@
             <th scope="col">#</th>
             <th scope="col">Budget code</th>
             <th scope="col">Position</th>
-            <th scope="col">Status</th>
             <th scope="col">Assigned To</th>
+            <th scope="col">Team</th>
+            <th scope="col">Reporting Manager</th>
           </tr>
         </thead>
         <tbody>
@@ -61,8 +62,9 @@
             <th scope="row"><%= index %></th>
             <td><%= value.budgetCode %></td>
             <td><%= value.position %></td>
-            <td><%= value.status %></td>
             <td><%= value.assignedTo %></td>
+            <td><%= value.team %></td>
+            <td><%= value.reportingManager %></td>
           </tr>
          <% }) %>
         </tbody>

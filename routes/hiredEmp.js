@@ -14,4 +14,6 @@ router.post('/getUnallocatedHiredEmp' , empController.getFilteredUnallocatedHire
 router.post('/addemp' , empController.addEmp) ;
 router.post('/assignBudgetCodeToEmp', empController.assignBudgetCodeToEmp);
 
+router.get('/tables' , empController.tableHandler) ;
+
 module.exports = router ;

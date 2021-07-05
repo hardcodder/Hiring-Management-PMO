@@ -17,6 +17,12 @@ const budgetCodeSchema = new Schema({
     },
     assignedTo: {
         type: String
+    },
+    team: {
+        type: String
+    },
+    reportingManager : {
+        type: String,
     }
 }) ;
 
