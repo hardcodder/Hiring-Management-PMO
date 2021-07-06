@@ -39,6 +39,9 @@
           <li class="nav-item active">
             <a class="nav-link" id="<%=path === 'all_requests' ? 'selected':''%>" href="/reqTable">All requests<span class="sr-only">(current)</span></a>
           </li>
+          <li class="nav-item active">
+            <a class="nav-link" id="<%=path === 'greenhouseLanding' ? 'selected':''%>" href="/greenhouseLanding">Greenhouse<span class="sr-only">(current)</span></a>
+          </li>
         <%}%>
         <%if(isAuth && (isAuth.team == "finance")){%>
         <li class="nav-item active">

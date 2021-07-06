@@ -1,0 +1,60 @@
+body
+{
+    font-family: 'Ubuntu', sans-serif;
+}
+
+h1 {
+    color: green;
+}
+
+.multipleSelection {
+    width: 300px;
+    margin:0 auto ;
+}
+
+.selectBox {
+    position: relative;
+    background-color: white;
+}
+
+.selectBox select {
+    width: 100%;
+    font-weight: bold;
+}
+
+.overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+#checkBoxes {
+    display: none;
+    border: 1px #8DF5E4 solid;
+    background-color: whitesmoke;
+}
+
+#checkBoxes label {
+    display: block;
+}
+
+#checkBoxes label:hover {
+    background-color: #e83e8c ;
+    color: white;
+    transition: all 250ms;
+}
+
+.plot-container.plotly
+{
+    width: fit-content;
+    margin: 0;
+}
+
+input.right {
+    float: right;
+}
+/* #vis {
+    float: right;
+} */

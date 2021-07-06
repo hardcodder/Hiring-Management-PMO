@@ -21,6 +21,8 @@ const openingRouter = require('./routes/opening') ;
 
 const hiredEmpRouter = require('./routes/hiredEmp') ;
 
+const visualizeRouter = require('./routes/visualize') ;
+
 const app = express() ;
 
 const MONGO_URI = `mongodb+srv://innovaccer:innovaccer@cluster0.cut4t.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
@@ -110,7 +112,7 @@ const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:5000/google/callback"
+    callbackURL: "http://c7568673ceb4.ngrok.io/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
       userProfile=profile;
@@ -151,6 +153,8 @@ app.use(budgetRouter) ;
 app.use(openingRouter) ;
 
 app.use(hiredEmpRouter) ;
+
+app.use(visualizeRouter)
 
 mongoose
   .connect(MONGO_URI, {

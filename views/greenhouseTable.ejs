@@ -1,0 +1,142 @@
+<%- include('./includes/head.ejs') %>
+<link rel="stylesheet" type="text/css" href="css/register.css">
+<link rel="stylesheet" type="text/css" href="css/table.css">
+<link rel="stylesheet" type="text/css" href="css/request_form.css">
+<link rel="stylesheet" type="text/css" href="css/analysis.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://kit.fontawesome.com/0cfa224e02.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<body style="background-color: rgba(255,164,0, 0.04999999701976776);">
+  <%- include('./includes/nav.ejs') %>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <div class="con d-flex container-fluid justify-content-center row" >
+        <form class="col-xl-3 col-lg-4 col-md-4 col-sm-8 col-12 shadow mt-5 py-5 request_form mb-5">
+            <div class="multipleSelection">
+                <div class="selectBox" 
+                    onclick="showCheckboxes()">
+                    <select class="form-control type">
+                        <option>Select Job Id</option>
+                    </select>
+                    
+                    <div class="overSelect"></div>     
+                </div>
+                <div id="checkBoxes" onclick="clicked()" style = "max-height: 180px; overflow: auto">
+                    <label for="Selectall">
+                        <input type="checkbox" id="all" />
+                        Select all
+                    </label>
+                </div>
+            </div>
+            <script>
+                var number = 4;
+                var res = d3.json("http://c7568673ceb4.ngrok.io/getJobNames", function(error, data_2){
+                    var jobids = data_2.jobNames
+                    for(var i = 0; i < jobids.length; i++){
+                        var label = document.createElement("label");
+                        var description = document.createTextNode(jobids[i]);
+                        var checkbox = document.createElement("input");
+                        checkbox.type = "checkbox";
+                        checkbox.id = jobids[i];
+                        checkbox.value = jobids[i];
+                        label.appendChild(checkbox);
+                        label.appendChild(description);
+                        document.getElementById("checkBoxes").appendChild(label);
+                }}) 
+                
+            </script>
+        </form>
+    </div>
+    
+  
+    <script>
+        var show = true;
+  
+        function showCheckboxes() {
+            var checkboxes = 
+                document.getElementById("checkBoxes");
+            
+            if (show) {
+                checkboxes.style.display = "block";
+                show = false;
+            } else {
+                checkboxes.style.display = "none";
+                show = true;
+            }
+        }
+    </script>
+    <main>
+        <p id="showData"></p>
+    </main>
+<script>
+    var totalJobs = document.getElementById("checkBoxes").childElementCount
+    const jobIdschecked = [];
+    function clicked(){
+        var totalJobs = document.getElementById("checkBoxes").childElementCount
+        const jobIdschecked = [];
+        if(document.getElementById("checkBoxes").children[0].children[0].checked){
+            for(var i =1; i < totalJobs; i++){
+                jobIdschecked.push(document.getElementById("checkBoxes").children[i].children[0].id)
+            }
+        }
+        else{
+            for(var i = 1; i < totalJobs; i++){
+                a = document.getElementById("checkBoxes").children[i].children[0]
+                if(a.checked){
+                    jobIdschecked.push(a.id)
+                }
+            }
+        }
+        // document.removeChild(document.getElementById("showData"))
+        getTable(jobIdschecked)
+
+    }
+    function filterData(data, jobids){
+        data_final = []
+        console.log("Filtering data")
+        for(var i = 0; i < data.length; i++){
+            console.log(data[i])
+            if(jobids.includes(data[i]['Name'])){
+                data_final.push(data[i])
+            }
+        }
+        return data_final
+    }
+    function getTable(jobids) {
+        var temp = d3.json("http://c7568673ceb4.ngrok.io/getTable", function(error, data_2){
+            var myData = filterData(data_2.data, jobids)
+            var col = [];
+            var keys = ["Name", "Id", "Active", "Rejected", "Hired"]
+            for (var i = 0; i < myData.length; i++) {
+                for(var j=0; j < keys.length; j++){
+                    if(col.indexOf(keys[j]) === -1){
+                        col.push(keys[j]);
+                    }
+             
+                }
+            }
+            var table = document.createElement("table");
+            table.classList.add("table") ;
+            table.classList.add("table-hover") ;
+            table.classList.add("table-dark")
+            var tr = table.insertRow(-1);                  
+
+            for (var i = 0; i < col.length; i++) {
+                var th = document.createElement("th");     
+                th.innerHTML = col[i];
+                tr.appendChild(th);
+            }
+            for (var i = 0; i < myData.length; i++) {
+                tr = table.insertRow(-1);
+                for (var j = 0; j < col.length; j++) {
+                    var tabCell = tr.insertCell(-1);
+                    tabCell.innerHTML = myData[i][col[j]];
+                }
+            }
+        var divContainer = document.getElementById("showData");
+        divContainer.innerHTML = "";
+        divContainer.appendChild(table);
+        })
+    }
+</script>
+<%- include('./includes/end.ejs') %>
