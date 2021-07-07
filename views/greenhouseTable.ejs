@@ -30,7 +30,7 @@
             </div>
             <script>
                 var number = 4;
-                var res = d3.json("http://c7568673ceb4.ngrok.io/getJobNames", function(error, data_2){
+                var res = d3.json("http://localhost:3000/getJobNames", function(error, data_2){
                     var jobids = data_2.jobNames
                     for(var i = 0; i < jobids.length; i++){
                         var label = document.createElement("label");
@@ -103,7 +103,7 @@
         return data_final
     }
     function getTable(jobids) {
-        var temp = d3.json("http://c7568673ceb4.ngrok.io/getTable", function(error, data_2){
+        var temp = d3.json("http://localhost:3000/getTable", function(error, data_2){
             var myData = filterData(data_2.data, jobids)
             var col = [];
             var keys = ["Name", "Id", "Active", "Rejected", "Hired"]

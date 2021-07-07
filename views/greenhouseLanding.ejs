@@ -7,6 +7,7 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://kit.fontawesome.com/0cfa224e02.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
 <body style="background-color: rgba(255,164,0, 0.04999999701976776);">
@@ -15,15 +16,15 @@
     <div class = " shadow p-3 mb-4 bg-white">
         <div class="d-flex justify-content-around btns">
             <h2 style="font-size: 1.6rem;border-radius: 30px;" class="btn " >
-                Job Openings :-<b>35</b>
+                Job Openings :-<b id="total_jobs"></b>
             </h2>
         </div>
         <div class="d-flex justify-content-around btns">
             <p class="btn " >
-                Closed :- <b>14</b>
+                Closed :- <b id="closed"></b>
             </p>
             <p class="btn " >
-                Opened :- <b>21</b>
+                Opened :- <b id="open"></b>
             </p>
         </div>
     </div>
@@ -31,19 +32,19 @@
 
     <div class = " shadow p-3 mb-4 bg-white">
         <div class="d-flex justify-content-around btns mb-3" >
-            <h2 style="font-size: 1.6rem;border-radius: 30px;" class="btn " >
-                Total Applications :-<b>35</b>
+            <h2 id=style="font-size: 1.6rem;border-radius: 30px;" class="btn " >
+                Total Applications :-<b id="totalApp"></b>
             </h2>
         </div>
         <div class="d-flex justify-content-around btns">
             <p class="btn " >
-                Active :- <b>14</b>
+                Active :- <b id="active"></b>
             </p>
             <p class="btn " >
-                Rejected :- <b>10</b>
+                Rejected :- <b id="rejected"></b>
             </p>
             <p class="btn " >
-                Hired :- <b>11</b>
+                Hired :- <b id="hired"></b>
             </p>
         </div>
     </div>
@@ -68,4 +69,17 @@
     </div>
     <br/>
   </div>
+  <script>
+      $.getJSON('http://localhost:3000/getLandingData', function(data) {
+        document.getElementById('totalApp').innerHTML = data.total_applications;
+        document.getElementById('hired').innerHTML = data.hired;
+        document.getElementById('active').innerHTML = data.active;
+        document.getElementById('rejected').innerHTML = data.rejected;
+        document.getElementById('total_jobs').innerHTML = data.total_jobs;
+        document.getElementById('closed').innerHTML = data.closed;
+        document.getElementById('open').innerHTML = data.open;
+
+    });
+   
+  </script>
 <%- include('./includes/end.ejs') %>

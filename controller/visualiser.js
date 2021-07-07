@@ -1,9 +1,9 @@
 module.exports.getGraph = async(req, res, next) => {
     try
     {
-        res.render('analysis', 
+        res.render('greenhouseAnalysis', 
         {
-            path: 'analysis',
+            path: 'greenhouseAnalysis',
             title: 'Graph Analysis',
             isAuth: req.user
         })

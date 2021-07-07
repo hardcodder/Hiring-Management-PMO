@@ -40,7 +40,7 @@
     
         <script>
             var number = 4;
-            var res = d3.json("http://c7568673ceb4.ngrok.io/getJobNames", function(error, data_2){
+            var res = d3.json("http://localhost:3000/getJobNames", function(error, data_2){
                 var jobids = data_2.jobNames
                 for(var i = 0; i < jobids.length; i++){
                     var label = document.createElement("label");
@@ -107,7 +107,7 @@ function clicked(){
 // }
 function getGraph(jobids){
     console.log("Started plotting")
-    var res = d3.json("http://c7568673ceb4.ngrok.io/getDataFunnel", function(error, data_2){
+    var res = d3.json("http://localhost:3000/getDataFunnel", function(error, data_2){
         // data = filteredData(data_2, jobids)
         var input  = {'data': data_2, 'width':1500, 'height': 600},
             canvas = setUpSvgCanvas(input);
@@ -624,7 +624,7 @@ function formatData2(data,jobids){
     return data_final
 }
 function getGraph2(jobids){
-    var res = d3.json("http://c7568673ceb4.ngrok.io/getData", function(error, data_2){
+    var res = d3.json("http://localhost:3000/getData", function(error, data_2){
         // data = filteredData(data_2, jobids)
         // var input  = {'data': data_2, 'width':1500, 'height': 600},
         data_final = formatData2(data_2, jobids);
